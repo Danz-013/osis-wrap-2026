@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSIS 2026 Wrap</title>
+    <style>
+        /* RESET & SETUP DASAR */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #110305; 
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #F5EFE6; 
+        }
+
+        /* CONTAINER HP */
+        .mobile-container {
+            width: 100%; max-width: 414px; height: 100vh; max-height: 850px; 
+            background-image: url('bg-utama.jpg'); 
+            background-size: 100% 100%; background-position: center; background-repeat: no-repeat;
+            box-shadow: 0 0 30px rgba(0,0,0,0.9); position: relative;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; overflow: hidden;
+        }
+
+        /* STYLE UNTUK PINDAH-PINDAH LAYAR */
+        .screen {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 100%; height: 100%;
+            transition: opacity 0.5s ease-in-out;
+            padding: 20px; 
+            position: absolute; 
+            top: 0; left: 0;
+            z-index: 10;
+        }
+        
+        .hidden { display: none !important; opacity: 0; }
+
+        /* TEKS ELEGAN */
+        h1, h2 { color: #E5C594; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        p { font-size: 1rem; letter-spacing: 1px; opacity: 0.9; margin-bottom: 30px; }
+
+        /* DESAIN INPUT TEKS */
+        .input-gold {
+            background: rgba(0, 0, 0, 0.4); 
+            color: #F5EFE6; border: 2px solid #E5C594; padding: 15px 20px;
+            font-size: 1.1rem; border-radius: 30px; width: 80%; margin-bottom: 20px;
+            text-align: center; outline: none; font-family: inherit; transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .input-gold::placeholder { color: rgba(245, 239, 230, 0.5); text-transform: none; }
+        .input-gold:focus { box-shadow: 0 0 15px rgba(229, 197, 148, 0.6); background: rgba(0, 0, 0, 0.6); }
+
+        /* DESAIN TOMBOL */
+        .btn-gold {
+            background: transparent; color: #E5C594; border: 2px solid #E5C594;
+            padding: 12px 30px; font-size: 1.1rem; font-weight: bold;
+            border-radius: 30px; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(229, 197, 148, 0.2); width: 80%; margin-bottom: 15px;
+        }
+        .btn-gold:hover:not(:disabled) { background: #E5C594; color: #1F060A; box-shadow: 0 4px 20px rgba(229, 197, 148, 0.6); }
+        .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* --- KUSUS HALAMAN VIDEO --- */
+        #video-page { padding: 0; background-color: #000; z-index: 20; }
+        .full-video { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- KUSUS EFEK MESIN TIK --- */
+        #message-page {
+            background-color: rgba(17, 3, 5, 0.85); /* Latar belakang agak gelap transparan nutupin background */
+            z-index: 15;
+            justify-content: center;
+        }
+
+        #typewriter-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #F5EFE6;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            min-height: 150px; 
+            margin-bottom: 20px;
+        }
+
+        .cursor {
+            display: inline-block; width: 3px; background-color: #E5C594;
+            margin-left: 2px; animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        
+        <!-- HALAMAN 0: LOGIN -->
+        <div id="login-page" class="screen">
+            <h1>Welcome Access</h1>
+            <p>Masukkan Kode Akses untuk memulai</p>
+            <input type="text" id="input-kode" class="input-gold" placeholder="Ketik kodemu di sini..." autocomplete="off">
+            <button id="btn-login" class="btn-gold" onclick="prosesLogin()">Enter</button>
+        </div>
+
+        <!-- HALAMAN 1: LANDING PAGE -->
+        <div id="landing-page" class="screen hidden">
+            <h1 id="user-greeting">Hai!</h1>
+            <p>This is Your OSIS 2026 Wrap</p>
+            <button class="btn-gold" onclick="mulaiPerjalanan()">Start Journey</button>
+        </div>
+
+        <!-- HALAMAN 2: LAYAR VIDEO -->
+        <div id="video-page" class="screen hidden">
+            <video id="intro-video" class="full-video" playsinline>
+                <source src="video.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- HALAMAN 3: PESAN TYPEWRITER (Setelah Video) -->
+        <div id="message-page" class="screen hidden">
+            <p><span id="typewriter-text"></span><span class="cursor">|</span></p>
+            
+            <button id="btn-lanjut" class="btn-gold hidden" onclick="masukHallOfFame()" style="margin-top: 30px;">Lihat Rapormu</button>
+        </div>
+
+    </div>
+
+    <!-- LOGIKA JAVASCRIPT -->
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbzC8jEw3PMCbGF33oBKkl7KROsEi5UAbFlhzlTDgcpFJKW_viIeYnTomFaSwN6oLhFn/exec";
+        
+        let kategoriUser = ""; 
+        let namaUser = "";
+
+        async function prosesLogin() {
+            let kodeInput = document.getElementById('input-kode').value;
+            if (kodeInput.trim() === "") { alert("Kode akses belum diisi!"); return; }
+
+            let btn = document.getElementById('btn-login');
+            btn.innerText = "Mengecek Data..."; btn.disabled = true;
+
+            try {
+                let response = await fetch(API_URL + "?kode=" + encodeURIComponent(kodeInput));
+                let data = await response.json();
+
+                if (data.status === "success") {
+                    namaUser = data.nama;
+                    kategoriUser = data.kategori.toLowerCase(); 
+                    
+                    document.getElementById('user-greeting').innerText = "Hai " + namaUser + "!";
+                    document.getElementById('login-page').classList.add('hidden');
+                    document.getElementById('landing-page').classList.remove('hidden');
+                } else {
+                    alert("Akses ditolak! Kode tidak ditemukan.");
+                }
+            } catch (error) {
+                alert("Jaringan error, coba lagi nanti!"); console.error(error);
+            }
+
+            btn.innerText = "Enter"; btn.disabled = false;
+        }
+
+        // --- FUNGSI START DIMODIFIKASI BUAT TESTING ---
+        function mulaiPerjalanan() {
+            document.getElementById('landing-page').classList.add('hidden');
+            document.getElementById('video-page').classList.remove('hidden');
+            
+            let vid = document.getElementById('intro-video');
+            vid.play().catch(e => console.log("Video blm ada/ga muter. Ga masalah buat ngetes."));
+
+            // JURUS TESTING: Skip video otomatis dalam 2 detik (2000 ms)
+            setTimeout(function() {
+                vid.pause(); // Stop videonya
+                tampilkanPesan(); // Langsung panggil fungsi teks ngetik
+            }, 2000);
+        }
+
+        // --- FUNGSI MUNCULIN PESAN (DIPISAH BIAR GAMPANG DIPANGGIL) ---
+        function tampilkanPesan() {
+            document.getElementById('video-page').classList.add('hidden');
+            document.getElementById('message-page').classList.remove('hidden');
+            
+            // Siapin teks beda-beda tergantung kategori
+            let teksPesan = "";
+            
+            if (kategoriUser === "purna") {
+                teksPesan = "Sebuah perjalanan yang panjang dan melelahkan telah kamu lewati, " + namaUser + ". Terima kasih atas segala dedikasi dan keringatmu. Kini saatnya beristirahat, warisanmu akan selalu abadi di sini.";
+            } else if (kategoriUser === "lanjut") {
+                teksPesan = "Tahun lalu adalah bukti ketangguhanmu. Namun, cerita " + namaUser + " belum usai di sini. Angkat kembali kepalamu, mari kita ciptakan sejarah yang lebih besar lagi.";
+            } else if (kategoriUser === "baru") {
+                teksPesan = "Selamat datang di medan juang yang baru, " + namaUser + ". Ini adalah awal dari lembaran ceritamu. Persiapkan dirimu, karena perjalanan hebat baru saja dimulai.";
+            } else {
+                teksPesan = "Terima kasih telah menjadi bagian dari perjalanan hebat ini, " + namaUser + ".";
+            }
+
+            // Panggil fungsi ngetik
+            ketikTeks(teksPesan, 0);
+        }
+
+        // (Kalau nanti mau videonya full lagi, ganti "setTimeout" pake kodingan "ended" yang sebelumnya)
+
+        // --- FUNGSI EFEK NGETIK (TYPEWRITER) ---
+        function ketikTeks(teks, index) {
+            let elemenTeks = document.getElementById('typewriter-text');
+            
+            // Kosongin teks pas mulai ngetik (buat jaga-jaga kalau dites ulang)
+            if (index === 0) elemenTeks.innerHTML = ""; 
+            
+            if (index < teks.length) {
+                elemenTeks.innerHTML += teks.charAt(index);
+                index++;
+                
+                // Kecepatan ngetik (60 milidetik per huruf)
+                setTimeout(function() { ketikTeks(teks, index); }, 60); 
+            } else {
+                // Kalau ngetik udah selesai, munculin tombol lanjut
+                setTimeout(function() {
+                    document.getElementById('btn-lanjut').classList.remove('hidden');
+                }, 500);
+            }
+        }
+
+        function masukHallOfFame() {
+            alert("Lanjut ke menu utama / statistik!");
+        }
+    </script>
+
+</body>
+</html>
