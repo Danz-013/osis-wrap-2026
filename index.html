@@ -3,132 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSIS 2026 Wrap</title>
+    <title>OSIS 2026 Portal</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: #110305; 
-            display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #F5EFE6; 
-        }
-
-        .mobile-container {
-            width: 100%; max-width: 414px; height: 100vh; max-height: 850px; 
-            background-image: url('bg-utama.jpg'); 
-            background-size: 100% 100%; background-position: center; background-repeat: no-repeat;
-            box-shadow: 0 0 30px rgba(0,0,0,0.9); position: relative;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; overflow: hidden;
-        }
-
-        .screen {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            width: 100%; height: 100%; transition: opacity 0.5s ease-in-out;
-            padding: 15px; position: absolute; top: 0; left: 0; z-index: 10;
-        }
-        
+        body { background-color: #110305; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #F5EFE6; }
+        .mobile-container { width: 100%; max-width: 414px; height: 100vh; max-height: 850px; background-image: url('bg-utama.jpg'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; box-shadow: 0 0 30px rgba(0,0,0,0.9); position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow: hidden; }
+        .screen { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; transition: opacity 0.5s ease-in-out; padding: 15px; position: absolute; top: 0; left: 0; z-index: 10; }
         .hidden { display: none !important; opacity: 0; pointer-events: none; }
-
         h1, h2 { color: #E5C594; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
         p { font-size: 1rem; letter-spacing: 1px; opacity: 0.9; margin-bottom: 30px; }
-
-        .input-gold {
-            background: rgba(0, 0, 0, 0.4); color: #F5EFE6; border: 2px solid #E5C594; padding: 15px 20px;
-            font-size: 1.1rem; border-radius: 30px; width: 80%; margin-bottom: 20px;
-            text-align: center; outline: none; font-family: inherit; transition: all 0.3s ease; text-transform: uppercase;
-        }
+        .input-gold { background: rgba(0, 0, 0, 0.4); color: #F5EFE6; border: 2px solid #E5C594; padding: 15px 20px; font-size: 1.1rem; border-radius: 30px; width: 80%; margin-bottom: 20px; text-align: center; outline: none; font-family: inherit; transition: all 0.3s ease; text-transform: uppercase; }
         .input-gold::placeholder { color: rgba(245, 239, 230, 0.5); text-transform: none; }
         .input-gold:focus { box-shadow: 0 0 15px rgba(229, 197, 148, 0.6); background: rgba(0, 0, 0, 0.6); }
-
-        .btn-gold {
-            background: transparent; color: #E5C594; border: 2px solid #E5C594;
-            padding: 12px 30px; font-size: 1.1rem; font-weight: bold;
-            border-radius: 30px; cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(229, 197, 148, 0.2); width: 80%; margin-bottom: 15px;
-        }
+        .btn-gold { background: transparent; color: #E5C594; border: 2px solid #E5C594; padding: 10px 20px; font-size: 1rem; font-weight: bold; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(229, 197, 148, 0.2); width: 100%; margin-bottom: 8px; }
         .btn-gold:hover:not(:disabled) { background: #E5C594; color: #1F060A; box-shadow: 0 4px 20px rgba(229, 197, 148, 0.6); }
         .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
-
         #video-page { padding: 0; background-color: #000; z-index: 20; }
         .full-video { width: 100%; height: 100%; object-fit: cover; }
-
         #message-page { background-color: rgba(17, 3, 5, 0.85); z-index: 15; }
         #typewriter-text { font-size: 1.2rem; line-height: 1.6; color: #F5EFE6; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); min-height: 150px; margin-bottom: 20px; }
         .cursor { display: inline-block; width: 3px; background-color: #E5C594; margin-left: 2px; animation: blink 0.7s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
 
-        /* --- DESAIN INTERAKTIF HALL OF FAME --- */
+        /* --- WRAP CARD --- */
         #hall-of-fame-page { background-color: rgba(17, 3, 5, 0.85); z-index: 25; }
-        
-        .wrap-card {
-            background: rgba(20, 5, 8, 0.94); border: 2px solid #E5C594; border-radius: 20px;
-            padding: 20px 15px; width: 96%; max-height: 90vh; overflow-y: auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.9); backdrop-filter: blur(8px);
-            text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative;
-        }
-
-        .lang-toggle {
-            position: absolute; top: 10px; right: 10px;
-            background: rgba(229, 197, 148, 0.1); border: 1px solid #E5C594;
-            color: #E5C594; padding: 4px 9px; font-size: 0.7rem; font-weight: bold;
-            border-radius: 10px; cursor: pointer; transition: all 0.2s ease; z-index: 30;
-        }
-        .lang-toggle:hover { background: #E5C594; color: #110305; }
-
+        .wrap-card { background: rgba(20, 5, 8, 0.94); border: 2px solid #E5C594; border-radius: 20px; padding: 20px 15px; width: 96%; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.9); backdrop-filter: blur(8px); text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
+        .lang-toggle { position: absolute; top: 10px; right: 10px; background: rgba(229, 197, 148, 0.1); border: 1px solid #E5C594; color: #E5C594; padding: 4px 9px; font-size: 0.7rem; font-weight: bold; border-radius: 10px; cursor: pointer; z-index: 30; }
         .wrap-card h2 { font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 5px; color: #E5C594; }
-        
-        .slide-content {
-            display: none; width: 100%; animation: fadeIn 0.4s ease-in-out; cursor: pointer;
-        }
+        .slide-content { display: none; width: 100%; animation: fadeIn 0.4s ease-in-out; cursor: pointer; }
         .slide-content.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .stat-title-lg { font-size: 0.7rem; color: rgba(245, 239, 230, 0.6); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
         .stat-value-lg { font-size: 1.2rem; font-weight: bold; color: #E5C594; text-shadow: 1px 1px 8px rgba(229, 197, 148, 0.4); margin-bottom: 6px; }
-
-        .tap-hint {
-            margin-top: 10px; font-size: 0.7rem; color: rgba(229, 197, 148, 0.6);
-            letter-spacing: 1px; animation: bounce 1.5s infinite; cursor: pointer;
-        }
+        .tap-hint { margin-top: 10px; font-size: 0.75rem; color: rgba(229, 197, 148, 0.8); font-weight: bold; letter-spacing: 1px; animation: bounce 1.5s infinite; cursor: pointer; background: rgba(229,197,148,0.1); padding: 5px 15px; border-radius: 15px;}
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+        .summary-header { border-bottom: 1px solid rgba(229, 197, 148, 0.2); padding-bottom: 6px; margin-bottom: 6px; width: 100%; text-align: center; }
+        .summary-name { font-size: 0.95rem; font-weight: bold; color: #E5C594; }
+        .summary-status { font-size: 0.7rem; color: #ff99bb; font-weight: bold; display: block; }
+        .summary-section { background: rgba(229, 197, 148, 0.04); border: 1px solid rgba(229, 197, 148, 0.15); border-radius: 8px; padding: 6px 10px; width: 100%; margin-bottom: 6px; text-align: left; }
+        .sum-label { font-size: 0.6rem; color: rgba(245,239,230,0.5); text-transform: uppercase; display: block; }
+        .sum-val { font-size: 0.85rem; font-weight: bold; color: #E5C594; }
+        .sum-desc { font-size: 0.68rem; color: rgba(245,239,230,0.75); font-style: italic; margin-top: 1px; line-height: 1.2; }
+        .summary-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; width: 100%; margin-bottom: 6px; }
+        .sum-stat-box { background: rgba(229, 197, 148, 0.06); border: 1px solid rgba(229, 197, 148, 0.15); border-radius: 6px; padding: 5px; text-align: center; }
+        .sum-stat-val { font-size: 0.8rem; font-weight: bold; color: #E5C594; margin-top: 2px; }
+        .btn-share { background: #E5C594; color: #110305; border: none; padding: 7px 14px; font-size: 0.8rem; font-weight: bold; border-radius: 20px; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(229, 197, 148, 0.4); margin-bottom: 6px; }
 
-        /* --- TATA LETAK SLIDE 5 (SUMMARY CARD) --- */
-        .summary-header {
-            border-bottom: 1px solid rgba(229, 197, 148, 0.2);
-            padding-bottom: 8px; margin-bottom: 8px; width: 100%;
-        }
-        .summary-name { font-size: 1rem; font-weight: bold; color: #E5C594; }
-        .summary-status { font-size: 0.75rem; color: #ff99bb; font-weight: bold; letter-spacing: 1px; }
+        /* --- DASHBOARD HOME --- */
+        #main-menu-page { background-color: rgba(17, 3, 5, 0.92); z-index: 30; justify-content: flex-start; padding: 15px 10px; }
+        .top-nav { display: flex; gap: 6px; width: 100%; overflow-x: auto; padding-bottom: 10px; border-bottom: 1px solid rgba(229, 197, 148, 0.3); margin-bottom: 12px; scrollbar-width: none; flex-shrink: 0; white-space: nowrap; cursor: grab; user-select: none; }
+        .top-nav:active { cursor: grabbing; }
+        .top-nav::-webkit-scrollbar { display: none; }
+        .nav-btn { background: transparent; color: rgba(245, 239, 230, 0.7); border: 1px solid rgba(245, 239, 230, 0.3); padding: 5px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: bold; cursor: pointer; white-space: nowrap; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 4px; pointer-events: auto; }
+        .nav-btn.active { background: rgba(229, 197, 148, 0.2); color: #E5C594; border-color: #E5C594; }
+        .dashboard-card { background: rgba(20, 5, 8, 0.95); border: 2px solid #E5C594; border-radius: 15px; padding: 12px 10px; width: 100%; max-height: calc(100vh - 90px); overflow-y: auto; box-shadow: 0 5px 25px rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: center; }
 
-        .summary-section {
-            background: rgba(229, 197, 148, 0.04); border: 1px solid rgba(229, 197, 148, 0.15);
-            border-radius: 10px; padding: 10px; width: 100%; margin-bottom: 8px; text-align: left;
-        }
-        .sum-label { font-size: 0.65rem; color: rgba(245,239,230,0.5); text-transform: uppercase; letter-spacing: 1px; display: block; }
-        .sum-val { font-size: 0.9rem; font-weight: bold; color: #E5C594; }
-        .sum-desc { font-size: 0.72rem; color: rgba(245,239,230,0.75); font-style: italic; margin-top: 2px; line-height: 1.25; }
-
-        .summary-stats-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; margin-bottom: 8px;
-        }
-        .sum-stat-box {
-            background: rgba(229, 197, 148, 0.06); border: 1px solid rgba(229, 197, 148, 0.15);
-            border-radius: 8px; padding: 6px 8px; text-align: center;
-        }
-        .sum-stat-val { font-size: 0.85rem; font-weight: bold; color: #E5C594; margin-top: 2px; }
-
-        .btn-share {
-            background: #E5C594; color: #110305; border: none; padding: 8px 16px;
-            font-size: 0.85rem; font-weight: bold; border-radius: 20px; cursor: pointer;
-            width: 100%; box-shadow: 0 4px 15px rgba(229, 197, 148, 0.4); transition: all 0.2s ease;
-        }
-        .btn-share:hover { background: #f3dfba; transform: scale(1.02); }
+        /* --- ADMIN PANEL NEW UI --- */
+        #admin-panel-page { background-color: rgba(17, 3, 5, 0.95); z-index: 35; justify-content: flex-start; padding: 20px 15px; }
+        .admin-card { background: rgba(30, 8, 12, 0.95); border: 2px solid #ff99bb; border-radius: 15px; padding: 15px; width: 100%; text-align: left; box-shadow: 0 5px 25px rgba(0,0,0,0.8); display: flex; flex-direction: column; max-height: 90vh; }
+        .admin-card h2 { color: #ff99bb; font-size: 1.1rem; margin-bottom: 10px; text-align: center; }
+        
+        .admin-input { background: rgba(0,0,0,0.5); color: #F5EFE6; border: 1px solid #ff99bb; padding: 10px 15px; font-size: 0.9rem; border-radius: 10px; width: 100%; margin-bottom: 10px; outline: none; }
+        
+        .user-list-container { flex-grow: 1; max-height: 400px; overflow-y: auto; background: rgba(0,0,0,0.3); border-radius: 10px; padding: 5px; border: 1px solid rgba(255,153,187,0.2); scrollbar-width: thin; }
+        
+        .user-item { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.6); padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid rgba(255,153,187,0.3); }
+        .user-info { display: flex; flex-direction: column; }
+        .user-name { font-size: 0.85rem; font-weight: bold; color: #F5EFE6; }
+        .user-code { font-size: 0.65rem; color: rgba(245,239,230,0.6); font-family: monospace; letter-spacing: 1px; }
+        .user-status { font-size: 0.7rem; font-weight: bold; margin-top: 3px; }
+        .status-sudah { color: #66ffcc; }
+        .status-belum { color: #ff99bb; }
+        
+        .btn-reset-small { background: #ff99bb; color: #110305; border: none; padding: 6px 12px; font-size: 0.75rem; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+        .btn-reset-small:hover { background: #ffb3cc; }
+        .btn-reset-small:disabled { background: gray; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -149,9 +98,7 @@
         </div>
 
         <div id="video-page" class="screen hidden">
-            <video id="intro-video" class="full-video" playsinline>
-                <source src="video.mp4" type="video/mp4">
-            </video>
+            <video id="intro-video" class="full-video" playsinline><source src="video.mp4" type="video/mp4"></video>
         </div>
 
         <div id="message-page" class="screen hidden">
@@ -159,96 +106,108 @@
             <button id="btn-lanjut" class="btn-gold hidden" onclick="masukHallOfFame()" style="margin-top: 30px;">Lihat Rapormu</button>
         </div>
 
-        <!-- HALL OF FAME (5 SLIDE) -->
+        <!-- HALL OF FAME (ANIMASI WRAP - 5 SLIDE) -->
         <div id="hall-of-fame-page" class="screen hidden">
             <div class="wrap-card">
                 <button id="btn-lang" class="lang-toggle" onclick="toggleBahasa()">🌐 EN</button>
-
                 <h2>OSIS 2026 WRAP</h2>
 
-                <!-- SLIDE 1: JULUKAN -->
                 <div id="slide-1" class="slide-content active" onclick="lanjutkanSlide()">
                     <div class="stat-title-lg" id="lbl-sapaan">Halo Nama, INI RAPORMU:</div>
                     <div class="stat-title-lg" id="lbl-julukan-title" style="margin-bottom: 5px;">JULUKAN TAHUN INI</div>
                     <div class="stat-value-lg" id="hof-julukan">-</div>
                 </div>
 
-                <!-- SLIDE 2: ROLE / STRENGTH -->
                 <div id="slide-2" class="slide-content" onclick="lanjutkanSlide()">
                     <div class="stat-title-lg" id="lbl-role-title">PERAN UTAMA / STRENGTH</div>
                     <div class="stat-value-lg" id="hof-role" style="color: #66ffcc; font-size: 1.1rem;">-</div>
-                    <p id="hof-role-desc" style="font-size: 0.8rem; color: rgba(245,239,230,0.7); font-style: italic; padding: 0 10px;">Deskripsi role akan muncul di sini.</p>
+                    <p id="hof-role-desc" style="font-size: 0.8rem; color: rgba(245,239,230,0.7); font-style: italic; padding: 0 10px;">-</p>
                 </div>
 
-                <!-- SLIDE 3: STATISTIK PENDERITAAN -->
                 <div id="slide-3" class="slide-content" onclick="lanjutkanSlide()">
                     <div class="stat-title-lg" id="lbl-stat-title">STATISTIK PERJUANGAN</div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%;">
-                        <div class="summary-box" style="background: rgba(229,197,148,0.05); border: 1px solid rgba(229,197,148,0.2); border-radius: 8px; padding: 8px; text-align: center;">
-                            <span class="sum-title" id="lbl-tidur-title">Tidur Hilang</span>
-                            <span class="sum-val" id="hof-tidur">-</span>
-                        </div>
-                        <div class="summary-box" style="background: rgba(229,197,148,0.05); border: 1px solid rgba(229,197,148,0.2); border-radius: 8px; padding: 8px; text-align: center;">
-                            <span class="sum-title" id="lbl-kopi-title">Gelas Kopi</span>
-                            <span class="sum-val" id="hof-kopi">-</span>
-                        </div>
-                        <div class="summary-box" style="grid-column: span 2; background: rgba(229,197,148,0.05); border: 1px solid rgba(229,197,148,0.2); border-radius: 8px; padding: 8px; text-align: center;">
-                            <span class="sum-title" id="lbl-event-title">Event Dijalanin</span>
-                            <span class="sum-val" id="hof-event">-</span>
-                        </div>
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-tidur-title">Tidur Hilang</span><span class="sum-val" id="hof-tidur">-</span></div>
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-kopi-title">Gelas Kopi</span><span class="sum-val" id="hof-kopi">-</span></div>
+                        <div class="sum-stat-box" style="grid-column: span 2;"><span class="sum-title" id="lbl-event-title">Event Dijalanin</span><span class="sum-val" id="hof-event">-</span></div>
                     </div>
                 </div>
 
-                <!-- SLIDE 4: PARTNER & STATUS AKHIR -->
                 <div id="slide-4" class="slide-content" onclick="lanjutkanSlide()">
                     <div class="stat-title-lg" id="lbl-partner-title">PARTNER IN CRIME</div>
                     <div class="stat-value-lg" id="hof-partner" style="font-size: 1.1rem; margin-bottom: 12px; color: #ff99bb;">-</div>
-                    
                     <div class="stat-title-lg" id="lbl-status-title">STATUS LEGENDA</div>
                     <div class="stat-value-lg" id="hof-status" style="font-size: 1.2rem;">-</div>
                 </div>
 
-                <!-- SLIDE 5: REKAPAN AKHIR -->
                 <div id="slide-5" class="slide-content">
                     <div class="summary-header">
                         <span class="summary-name" id="sum-nama">-</span>
                         <span class="summary-status" id="sum-status">-</span>
                     </div>
-
                     <div class="summary-section" style="padding: 6px 10px;">
-                        <span class="sum-label" id="lbl-sum-julukan-title">Julukan Utama</span>
-                        <span class="sum-val" id="sum-julukan" style="color: #E5C594;">-</span>
+                        <span class="sum-label" id="lbl-sum-julukan-title">Julukan Utama</span><span class="sum-val" id="sum-julukan" style="color: #E5C594;">-</span>
                     </div>
-
                     <div class="summary-section">
-                        <span class="sum-label" id="lbl-sum-role-title">Peran Utama / Strength</span>
-                        <span class="sum-val" id="sum-role" style="color: #66ffcc; font-size: 0.85rem;">-</span>
+                        <span class="sum-label" id="lbl-sum-role-title">Peran Utama</span><span class="sum-val" id="sum-role" style="color: #66ffcc; font-size: 0.85rem;">-</span>
                         <p class="sum-desc" id="sum-role-desc">-</p>
                     </div>
-
                     <div class="summary-stats-grid">
-                        <div class="sum-stat-box">
-                            <span class="sum-title" id="lbl-sum-tidur-title">Tidur</span>
-                            <span class="sum-stat-val" id="sum-tidur">-</span>
-                        </div>
-                        <div class="sum-stat-box">
-                            <span class="sum-title" id="lbl-sum-kopi-title">Kopi</span>
-                            <span class="sum-stat-val" id="sum-kopi">-</span>
-                        </div>
-                        <div class="sum-stat-box">
-                            <span class="sum-title" id="lbl-sum-event-title">Event</span>
-                            <span class="sum-stat-val" id="sum-event">-</span>
-                        </div>
-                        <div class="sum-stat-box">
-                            <span class="sum-title" id="lbl-sum-partner-title">Partner</span>
-                            <span class="sum-stat-val" id="sum-partner" style="font-size: 0.7rem; color: #ff99bb;">-</span>
-                        </div>
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-sum-tidur-title">Tidur</span><span class="sum-stat-val" id="sum-tidur">-</span></div>
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-sum-kopi-title">Kopi</span><span class="sum-stat-val" id="sum-kopi">-</span></div>
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-sum-event-title">Event</span><span class="sum-stat-val" id="sum-event">-</span></div>
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-sum-partner-title">Partner</span><span class="sum-stat-val" id="sum-partner" style="font-size: 0.7rem; color: #ff99bb;">-</span></div>
                     </div>
-
                     <button class="btn-share" id="btn-share-text" onclick="alert(currentLang === 'ID' ? 'Screenshot halaman ini dan pamerin ke Story IG kamu!' : 'Screenshot this page and share it to your IG Story!')">📸 Screenshot & Share</button>
                 </div>
+                <div class="tap-hint" id="lbl-hint" onclick="lanjutkanSlide()">Ketuk untuk lanjut ➔</div>
+            </div>
+        </div>
 
-                <div class="tap-hint" id="lbl-hint" onclick="lanjutkanSlide()">Ketuk di mana saja untuk lanjut ➔</div>
+        <!-- --- MAIN MENU DASHBOARD --- -->
+        <div id="main-menu-page" class="screen hidden">
+            <div class="top-nav" id="topNavScroll">
+                <button class="nav-btn active">📊 Home</button>
+                <button class="nav-btn" onclick="alert('Fitur Program Kerja Segera Hadir!')">📋 Proker</button>
+                <button class="nav-btn" onclick="alert('Fitur Daftar Anggota Segera Hadir!')">👥 Anggota</button>
+                <button class="nav-btn" onclick="alert('Fitur Galeri Segera Hadir!')">🖼️ Galeri</button>
+                <button class="nav-btn" id="btn-audio" onclick="toggleAudio()">🔊 Musik: On</button>
+                <button class="nav-btn" id="dash-lang-btn" onclick="toggleBahasa()">🌐 ID</button>
+                <button class="nav-btn danger" onclick="logout()">🚪 Logout</button>
+            </div>
+
+            <div class="dashboard-card">
+                <h2 style="font-size: 0.95rem; margin-bottom: 6px;">PORTAL REKAP 2026</h2>
+                <div class="summary-header"><span class="summary-name" id="dash-nama">-</span><span class="summary-status" id="dash-status">-</span></div>
+                <div class="summary-section" style="padding: 5px 8px;"><span class="sum-label" id="dash-lbl-julukan-title">Julukan Utama</span><span class="sum-val" id="dash-julukan" style="color: #E5C594; font-size: 0.85rem;">-</span></div>
+                <div class="summary-section" style="padding: 5px 8px;"><span class="sum-label" id="dash-lbl-role-title">Peran Utama</span><span class="sum-val" id="dash-role" style="color: #66ffcc; font-size: 0.8rem;">-</span><p class="sum-desc" id="dash-role-desc" style="font-size: 0.65rem;">-</p></div>
+                <div class="summary-stats-grid" style="margin-bottom: 5px;">
+                    <div class="sum-stat-box"><span class="sum-title" id="dash-lbl-tidur-title">Tidur</span><span class="sum-stat-val" id="dash-tidur">-</span></div>
+                    <div class="sum-stat-box"><span class="sum-title" id="dash-lbl-kopi-title">Kopi</span><span class="sum-stat-val" id="dash-kopi">-</span></div>
+                    <div class="sum-stat-box"><span class="sum-title" id="dash-lbl-event-title">Event</span><span class="sum-stat-val" id="dash-event">-</span></div>
+                    <div class="sum-stat-box"><span class="sum-title" id="dash-lbl-partner-title">Partner</span><span class="sum-stat-val" id="dash-partner" style="font-size: 0.65rem; color: #ff99bb;">-</span></div>
+                </div>
+                <button class="btn-share" id="dash-btn-share-text" onclick="alert(currentLang === 'ID' ? 'Screenshot halaman ini dan pamerin ke Story IG kamu!' : 'Screenshot this page and share it to your IG Story!')" style="margin-bottom: 5px; padding: 6px;">📸 Screenshot & Share</button>
+                <button class="btn-gold" id="dash-btn-rewatch-text" style="width: 100%; font-size: 0.75rem; padding: 6px; margin-bottom: 0;" onclick="rewatchWrap()">📼 Tonton Ulang Animasi</button>
+            </div>
+        </div>
+
+        <!-- --- ADMIN PANEL PAGE (BARU) --- -->
+        <div id="admin-panel-page" class="screen hidden">
+            <div class="admin-card">
+                <h2>🛡️ PANEL ADMIN</h2>
+                
+                <!-- Search Bar Admin -->
+                <input type="text" id="admin-search" class="admin-input" placeholder="🔍 Cari nama atau kode..." onkeyup="filterAdminList()">
+                
+                <!-- List User -->
+                <div class="user-list-container" id="admin-user-list">
+                    <div style="text-align:center; color:#E5C594; font-size:0.8rem; margin-top:20px;">Mengambil data user...</div>
+                </div>
+                
+                <div style="margin-top: 15px; border-top: 1px solid rgba(255,153,187,0.2); padding-top: 10px;">
+                    <button class="btn-gold" style="width: 100%; font-size: 0.8rem; padding: 8px;" onclick="logout()">🚪 Keluar Admin</button>
+                </div>
             </div>
         </div>
 
@@ -259,18 +218,29 @@
         const API_URL = "https://script.google.com/macros/s/AKfycbzC8jEw3PMCbGF33oBKkl7KROsEi5UAbFlhzlTDgcpFJKW_viIeYnTomFaSwN6oLhFn/exec";
         
         let kategoriUser = "", namaUser = "", julukanUser = "";
-        let namaPanjangUser = "", jumlahEventUser = "", partnerUser = "", roleUser = "";
+        let namaPanjangUser = "", jumlahEventUser = "", partnerUser = "", roleUser = "", statusNontonUser = "";
+        let currentKode = "";
+        
+        let allUsersData = []; // Data untuk nyimpen list anak-anak di Admin
 
         const playlist = ["lagu1.mp3", "lagu2.mp3", "lagu3.mp3"]; 
-        let bgMusic = new Audio();
+        let bgMusic = new Audio(); let isMuted = false;
+        let slideAktif = 1; const totalSlide = 5; let currentLang = "ID"; 
 
-        let slideAktif = 1;
-        const totalSlide = 5; 
-        let currentLang = "ID"; 
+        // Drag to scroll
+        const slider = document.getElementById('topNavScroll');
+        let isDown = false, startX, scrollLeft;
+        slider.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft; });
+        slider.addEventListener('mouseleave', () => { isDown = false; });
+        slider.addEventListener('mouseup', () => { isDown = false; });
+        slider.addEventListener('mousemove', (e) => {
+            if(!isDown) return; e.preventDefault(); const x = e.pageX - slider.offsetLeft; slider.scrollLeft = scrollLeft - ((x - startX) * 1.5);
+        });
 
         async function prosesLogin() {
-            let kodeInput = document.getElementById('input-kode').value;
-            if (kodeInput.trim() === "") { alert("Kode akses belum diisi!"); return; }
+            let kodeInput = document.getElementById('input-kode').value.trim();
+            if (kodeInput === "") { alert("Kode akses belum diisi!"); return; }
+            currentKode = kodeInput;
 
             let btn = document.getElementById('btn-login');
             btn.innerText = "Mengecek Data..."; btn.disabled = true;
@@ -281,260 +251,226 @@
 
                 if (data.status === "success") {
                     namaUser = data.nama;
-                    kategoriUser = String(data.kategori).toLowerCase(); 
-                    julukanUser = data.julukan || "Misterius"; 
+                    kategoriUser = String(data.kategori).toLowerCase().trim(); 
                     
+                    document.getElementById('login-page').classList.add('hidden');
+
+                    // JIKA ADMIN MASUK
+                    if (kategoriUser.includes("admin")) {
+                        document.getElementById('admin-panel-page').classList.remove('hidden');
+                        fetchAdminData(); // Tarik semua data dari server
+                        btn.innerText = "Enter"; btn.disabled = false;
+                        return;
+                    }
+                    
+                    // JIKA USER BIASA MASUK
+                    julukanUser = data.julukan || "Misterius"; 
                     namaPanjangUser = data.namaPanjang || namaUser; 
                     jumlahEventUser = data.jumlahEvent || "0";
                     partnerUser = data.partner || "Sendirian";
                     roleUser = data.role || "Andalan Organisasi 🌟"; 
-                    
+                    statusNontonUser = data.statusNonton || "BELUM";
+
                     document.getElementById('user-greeting').innerText = "Hai " + namaUser + "!";
-                    document.getElementById('login-page').classList.add('hidden');
-                    document.getElementById('landing-page').classList.remove('hidden');
+                    if (statusNontonUser === "SUDAH") { bukaMainMenu(); } 
+                    else { document.getElementById('landing-page').classList.remove('hidden'); }
                 } else {
                     alert("Akses ditolak! Kode tidak ditemukan.");
                 }
             } catch (error) {
                 alert("Jaringan error, coba lagi nanti!"); console.error(error);
             }
-
             btn.innerText = "Enter"; btn.disabled = false;
         }
 
+        // --- FITUR ADMIN: TARIK DATA USER ---
+        async function fetchAdminData() {
+            let container = document.getElementById('admin-user-list');
+            try {
+                let res = await fetch(API_URL + "?action=get_all_users");
+                let data = await res.json();
+                if (data.status === "success") {
+                    allUsersData = data.data; // Simpan ke variabel lokal
+                    renderAdminList(allUsersData);
+                } else {
+                    container.innerHTML = "<div style='color:red; font-size:0.8rem; text-align:center;'>Gagal memuat data.</div>";
+                }
+            } catch (e) {
+                container.innerHTML = "<div style='color:red; font-size:0.8rem; text-align:center;'>Error jaringan saat ambil list.</div>";
+            }
+        }
+
+        // --- FITUR ADMIN: TAMPILIN LIST KE LAYAR ---
+        function renderAdminList(users) {
+            let container = document.getElementById('admin-user-list');
+            container.innerHTML = ""; // Bersihin isi sebelumnya
+            
+            if (users.length === 0) {
+                container.innerHTML = "<div style='text-align:center; font-size:0.8rem; margin-top:20px;'>Tidak ada user ditemukan.</div>";
+                return;
+            }
+
+            users.forEach(user => {
+                let statusClass = (user.statusNonton === "SUDAH") ? "status-sudah" : "status-belum";
+                let statusText = (user.statusNonton === "SUDAH") ? "SUDAH NONTON" : "BELUM NONTON";
+                
+                // Bikin kotak list per anak
+                let itemHtml = `
+                    <div class="user-item">
+                        <div class="user-info">
+                            <span class="user-name">${user.nama}</span>
+                            <span class="user-code">Kode: ${user.kode}</span>
+                            <span class="user-status ${statusClass}">● ${statusText}</span>
+                        </div>
+                        <button class="btn-reset-small" onclick="adminResetUser('${user.kode}', this)" ${(user.statusNonton !== "SUDAH") ? "disabled" : ""}>
+                            ${(user.statusNonton !== "SUDAH") ? "Reset" : "Reset"}
+                        </button>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+        }
+
+        // --- FITUR ADMIN: FILTER PENCARIAN SEARCH BAR ---
+        function filterAdminList() {
+            let keyword = document.getElementById('admin-search').value.toLowerCase();
+            let filtered = allUsersData.filter(u => 
+                u.nama.toLowerCase().includes(keyword) || 
+                u.kode.toLowerCase().includes(keyword)
+            );
+            renderAdminList(filtered);
+        }
+
+        // --- FITUR ADMIN: TOMBOL RESET PER ANAK ---
+        async function adminResetUser(targetKode, btnElement) {
+            if (!confirm(`Yakin mau reset status nonton untuk kode ${targetKode}?`)) return;
+
+            btnElement.innerText = "Wait...";
+            btnElement.disabled = true;
+
+            try {
+                let res = await fetch(API_URL + "?kode=" + encodeURIComponent(targetKode) + "&action=reset");
+                let result = await res.json();
+                if (result.status === "success") {
+                    // Update data lokal biar ga usah loading server lagi
+                    let index = allUsersData.findIndex(u => u.kode === targetKode);
+                    if(index !== -1) { allUsersData[index].statusNonton = "BELUM"; }
+                    
+                    filterAdminList(); // Refresh tampilan list
+                } else {
+                    alert("Gagal mereset user.");
+                    btnElement.innerText = "Reset";
+                    btnElement.disabled = false;
+                }
+            } catch (err) {
+                alert("Jaringan error, gagal reset.");
+                btnElement.innerText = "Reset";
+                btnElement.disabled = false;
+            }
+        }
+
+        // --- SISANYA ADALAH FUNGSI WRAP NORMAL ---
         function mulaiPerjalanan() {
             document.getElementById('landing-page').classList.add('hidden');
             document.getElementById('video-page').classList.remove('hidden');
-            
             let vid = document.getElementById('intro-video');
             vid.play().catch(e => console.log("Video blm ada."));
-
-            setTimeout(function() {
-                vid.pause(); 
-                tampilkanPesan(); 
-            }, 2000);
+            setTimeout(function() { vid.pause(); tampilkanPesan(); }, 2000);
         }
 
         function tampilkanPesan() {
-            document.getElementById('video-page').classList.add('hidden');
-            document.getElementById('message-page').classList.remove('hidden');
+            document.getElementById('video-page').classList.add('hidden'); document.getElementById('message-page').classList.remove('hidden');
+            bgMusic.src = playlist[Math.floor(Math.random() * playlist.length)]; bgMusic.loop = true; bgMusic.volume = 0.8; bgMusic.muted = isMuted;
+            bgMusic.play().catch(e => console.log("Browser ngeblok autoplay"));
             
-            let laguAcak = playlist[Math.floor(Math.random() * playlist.length)];
-            bgMusic.src = laguAcak;
-            bgMusic.loop = true; 
-            bgMusic.volume = 0.8; 
-            bgMusic.play().catch(e => console.log("Browser ngeblok autoplay lagu"));
-            
-            let teksPesan = "";
-            if (kategoriUser.includes("purna")) {
-                teksPesan = "Sebuah perjalanan yang panjang dan melelahkan telah kamu lewati, " + namaUser + ". Terima kasih atas segala dedikasi dan keringatmu. Kini saatnya beristirahat, warisanmu akan selalu abadi di sini.";
-            } else if (kategoriUser.includes("lanjut")) {
-                teksPesan = "Tahun lalu adalah bukti ketangguhanmu. Namun, cerita " + namaUser + " belum usai di sini. Angkat kembali kepalamu, mari kita ciptakan sejarah yang lebih besar lagi.";
-            } else if (kategoriUser.includes("baru")) {
-                teksPesan = "Selamat datang di medan juang yang baru, " + namaUser + ". Ini adalah awal dari lembaran ceritamu. Persiapkan dirimu, karena perjalanan hebat baru saja dimulai.";
-            } else {
-                teksPesan = "Terima kasih telah menjadi bagian dari perjalanan hebat ini, " + namaUser + ".";
-            }
+            let teksPesan = "Terima kasih telah menjadi bagian dari perjalanan hebat ini, " + namaUser + ".";
+            if (kategoriUser.includes("purna")) teksPesan = "Sebuah perjalanan panjang usai, " + namaUser + ". Terima kasih, warisanmu abadi.";
+            else if (kategoriUser.includes("lanjut")) teksPesan = "Cerita " + namaUser + " belum usai di sini. Mari kita ciptakan sejarah lagi.";
+            else if (kategoriUser.includes("baru")) teksPesan = "Selamat datang, " + namaUser + ". Ini adalah awal dari lembaran ceritamu.";
             ketikTeks(teksPesan, 0);
         }
 
         function ketikTeks(teks, index) {
             let elemenTeks = document.getElementById('typewriter-text');
             if (index === 0) elemenTeks.innerHTML = ""; 
-            
             if (index < teks.length) {
-                elemenTeks.innerHTML += teks.charAt(index);
-                index++;
+                elemenTeks.innerHTML += teks.charAt(index); index++;
                 setTimeout(function() { ketikTeks(teks, index); }, 60); 
-            } else {
-                setTimeout(function() {
-                    document.getElementById('btn-lanjut').classList.remove('hidden');
-                }, 500);
-            }
+            } else { setTimeout(function() { document.getElementById('btn-lanjut').classList.remove('hidden'); }, 500); }
         }
 
-        function masukHallOfFame() {
-            document.getElementById('message-page').classList.add('hidden');
-            document.getElementById('hall-of-fame-page').classList.remove('hidden');
-            updateTampilanBahasa();
+        async function masukHallOfFame() {
+            document.getElementById('message-page').classList.add('hidden'); document.getElementById('hall-of-fame-page').classList.remove('hidden');
+            fetch(API_URL + "?kode=" + encodeURIComponent(currentKode) + "&action=set_sudah");
+            slideAktif = 1; resetSlides(); updateTampilanBahasa();
         }
 
-        function toggleBahasa() {
-            if (currentLang === "ID") {
-                currentLang = "EN";
-                document.getElementById('btn-lang').innerText = "🌐 ID";
-            } else {
-                currentLang = "ID";
-                document.getElementById('btn-lang').innerText = "🌐 EN";
-            }
-            updateTampilanBahasa();
-        }
-
+        function resetSlides() { for(let i=1; i<=totalSlide; i++) { document.getElementById('slide-'+i).classList.remove('active'); } document.getElementById('slide-1').classList.add('active'); }
+        function lanjutkanSlide() { if(slideAktif === 5) { document.getElementById('hall-of-fame-page').classList.add('hidden'); bukaMainMenu(); return; } document.getElementById('slide-'+slideAktif).classList.remove('active'); slideAktif++; document.getElementById('slide-'+slideAktif).classList.add('active'); updateTampilanBahasa(); }
+        function bukaMainMenu() { document.getElementById('main-menu-page').classList.remove('hidden'); updateTampilanBahasa(); }
+        function rewatchWrap() { document.getElementById('main-menu-page').classList.add('hidden'); document.getElementById('hall-of-fame-page').classList.remove('hidden'); slideAktif = 1; resetSlides(); updateTampilanBahasa(); if(bgMusic.paused) bgMusic.play().catch(e=>console.log("Error")); }
+        function toggleAudio() { isMuted = !isMuted; bgMusic.muted = isMuted; updateAudioButtonText(); }
+        function updateAudioButtonText() { let btn = document.getElementById('btn-audio'); btn.innerText = isMuted ? (currentLang==="ID"?"🔇 Musik: Off":"🔇 Music: Off") : (currentLang==="ID"?"🔊 Musik: On":"🔊 Music: On"); }
+        function logout() { document.getElementById('input-kode').value = ""; document.getElementById('main-menu-page').classList.add('hidden'); document.getElementById('admin-panel-page').classList.add('hidden'); document.getElementById('login-page').classList.remove('hidden'); bgMusic.pause(); bgMusic.currentTime = 0; }
+        
+        function toggleBahasa() { currentLang = (currentLang === "ID") ? "EN" : "ID"; document.getElementById('btn-lang').innerText = "🌐 " + currentLang; updateAudioButtonText(); updateTampilanBahasa(); }
+        
         function updateTampilanBahasa() {
-            document.getElementById('hof-julukan').innerText = julukanUser;
-            document.getElementById('sum-nama').innerText = namaPanjangUser;
-            document.getElementById('sum-julukan').innerText = julukanUser;
+            document.getElementById('hof-julukan').innerText = julukanUser; document.getElementById('sum-nama').innerText = namaPanjangUser; document.getElementById('dash-nama').innerText = namaPanjangUser; document.getElementById('sum-julukan').innerText = julukanUser; document.getElementById('dash-julukan').innerText = julukanUser;
 
             let roleClean = roleUser.toLowerCase();
-            let elemenRole = document.getElementById('hof-role');
-            let elemenDesc = document.getElementById('hof-role-desc');
-            let sumRole = document.getElementById('sum-role');
-            let sumDesc = document.getElementById('sum-role-desc');
+            let elRole = document.getElementById('hof-role'), elDesc = document.getElementById('hof-role-desc'), sumRole = document.getElementById('sum-role'), dashRole = document.getElementById('dash-role'), sumDesc = document.getElementById('sum-role-desc'), dashDesc = document.getElementById('dash-role-desc');
 
-            let valTidur = "", valKopi = "", valEvent = "", valPartner = "";
-
+            let vTidur = "", vKopi = "", vEvent = "", vPartner = "";
             if (kategoriUser.includes("baru")) {
-                valTidur = (currentLang === "ID") ? "0 Jam (Aman)" : "0 Hours";
-                valKopi = (currentLang === "ID") ? "Susu 🧃" : "Milk 🧃";
-                valEvent = (currentLang === "ID") ? "Beban (Soon)" : "Unassigned";
-                valPartner = (currentLang === "ID") ? "Malu-Malu 👉👈" : "Still Shy 👉👈";
+                vTidur = (currentLang === "ID") ? "0 Jam (Aman)" : "0 Hours"; vKopi = (currentLang === "ID") ? "Susu 🧃" : "Milk 🧃"; vEvent = (currentLang === "ID") ? "Beban (Soon)" : "Unassigned"; vPartner = (currentLang === "ID") ? "Malu-Malu 👉👈" : "Still Shy 👉👈";
             } else {
-                valTidur = (currentLang === "ID") ? "99+ Jam 💀" : "99+ Hours 💀";
-                valKopi = (currentLang === "ID") ? "1.000+ Gelas" : "1,000+ Cups";
-                valEvent = jumlahEventUser + (currentLang === "ID" ? " Event" : " Events");
-                valPartner = partnerUser;
+                vTidur = (currentLang === "ID") ? "99+ Jam 💀" : "99+ Hours 💀"; vKopi = (currentLang === "ID") ? "1.000+ Gelas" : "1,000+ Cups"; vEvent = jumlahEventUser + (currentLang === "ID" ? " Event" : " Events"); vPartner = partnerUser;
             }
 
-            document.getElementById('hof-tidur').innerText = valTidur;
-            document.getElementById('hof-kopi').innerText = valKopi;
-            document.getElementById('hof-event').innerText = valEvent;
-            document.getElementById('hof-partner').innerText = valPartner;
+            document.getElementById('hof-tidur').innerText = vTidur; document.getElementById('hof-kopi').innerText = vKopi; document.getElementById('hof-event').innerText = vEvent; document.getElementById('hof-partner').innerText = vPartner;
+            document.getElementById('sum-tidur').innerText = vTidur; document.getElementById('sum-kopi').innerText = vKopi; document.getElementById('sum-event').innerText = vEvent; document.getElementById('sum-partner').innerText = vPartner;
+            document.getElementById('dash-tidur').innerText = vTidur; document.getElementById('dash-kopi').innerText = vKopi; document.getElementById('dash-event').innerText = vEvent; document.getElementById('dash-partner').innerText = vPartner;
 
-            document.getElementById('sum-tidur').innerText = valTidur;
-            document.getElementById('sum-kopi').innerText = valKopi;
-            document.getElementById('sum-event').innerText = valEvent;
-            document.getElementById('sum-partner').innerText = valPartner;
+            let tRoleID = "", tRoleEN = "", dListID = [], dListEN = [];
+            if (roleClean.includes("mind thinker")) { tRoleID += "Sang Pemikir Konsep 🧠 / "; tRoleEN += "The Mind Thinker 🧠 / "; dListID.push("Otak di balik ide-ide brilian."); dListEN.push("The mastermind behind brilliant ideas."); }
+            if (roleClean.includes("problem solver")) { tRoleID += "Penumpas Masalah ⚡ / "; tRoleEN += "The Problem Solver ⚡ / "; dListID.push("Selalu sigap dan tenang di lapangan."); dListEN.push("Always alert and calm on the field."); }
+            if (roleClean.includes("field commander")) { tRoleID += "Pawang Lapangan 🚨 / "; tRoleEN += "The Field Commander 🚨 / "; dListID.push("Komandan garis depan paling sibuk."); dListEN.push("The front-line commander."); }
+            if (roleClean.includes("mood booster")) { tRoleID += "Pencair Suasana ✨ / "; tRoleEN += "The Mood Booster ✨ / "; dListID.push("Penyelamat rapat dari ketegangan."); dListEN.push("Turning tense meetings into laughter."); }
+            if (roleClean.includes("pure heartedly")) { tRoleID += "Pemberi Hati Tulus 🤍 / "; tRoleEN += "The Pure Heartedly 🤍 / "; dListID.push("Tulus maju jadi volunteer darurat."); dListEN.push("Stepping up during emergencies."); }
+            if (roleClean.includes("wise advisor")) { tRoleID += "Pilar Kebijaksanaan 🦉 / "; tRoleEN += "The Wise Advisor 🦉 / "; dListID.push("Tempat curhat paling nyaman."); dListEN.push("The go-to person when stressed."); }
+            if (roleClean.includes("silent worker")) { tRoleID += "Pekerja Senyap 🤫 / "; tRoleEN += "The Silent Worker 🤫 / "; dListID.push("Kerja nyata tanpa banyak bicara."); dListEN.push("Moves without making a sound, real results."); }
+            if (roleClean.includes("strategic mastermind")) { tRoleID += "Dalang Strategis ♟️ / "; tRoleEN += "The Strategic Mastermind ♟️ / "; dListID.push("Menyusun strategi jangka panjang."); dListEN.push("Crafting long-term strategies."); }
 
-            // --- SISTEM PEMBACA MULTI-ROLE PINTAR ---
-            let textRoleID = "", textRoleEN = "";
-            let descListID = [], descListEN = [];
+            if (tRoleID === "") { tRoleID = roleUser; tRoleEN = roleUser; dListID.push("Kontribusi epik buat organisasi."); dListEN.push("Epic contribution to the organization."); } 
+            else { tRoleID = tRoleID.slice(0,-3); tRoleEN = tRoleEN.slice(0,-3); }
 
-            if (roleClean.includes("mind thinker") || roleClean.includes("pemikir konsep")) {
-                textRoleID += "Sang Pemikir Konsep 🧠 / ";
-                textRoleEN += "The Mind Thinker 🧠 / ";
-                descListID.push("Otak di balik ide-ide brilian dan konsep proker organisasi.");
-                descListEN.push("The mastermind behind brilliant ideas and organization programs.");
-            }
-            if (roleClean.includes("problem solver") || roleClean.includes("penumpas masalah")) {
-                textRoleID += "Penumpas Masalah ⚡ / ";
-                textRoleEN += "The Problem Solver ⚡ / ";
-                descListID.push("Selalu sigap dan tenang pas ada masalah di lapangan.");
-                descListEN.push("Always alert and calm whenever trouble strikes on the field.");
-            }
-            if (roleClean.includes("field commander") || roleClean.includes("pawang lapangan")) {
-                textRoleID += "Pawang Lapangan 🚨 / ";
-                textRoleEN += "The Field Commander 🚨 / ";
-                descListID.push("Komandan garis depan yang paling sibuk ngatur jalannya acara pas Hari-H.");
-                descListEN.push("The front-line commander making sure events run smoothly on D-Day.");
-            }
-            if (roleClean.includes("mood booster") || roleClean.includes("pencair suasana")) {
-                textRoleID += "Pencair Suasana ✨ / ";
-                textRoleEN += "The Mood Booster ✨ / ";
-                descListID.push("Penyelamat rapat yang tadinya tegang jadi penuh ketawa.");
-                descListEN.push("Turning tense and boring meetings into endless laughter.");
-            }
-            if (roleClean.includes("pure heartedly") || roleClean.includes("tulus")) {
-                textRoleID += "Pemberi Hati yang Tulus 🤍 / ";
-                textRoleEN += "The Pure Heartedly 🤍 / ";
-                descListID.push("Tulus dan mendadak maju jadi volunteer saat organisasi darurat.");
-                descListEN.push("Stepping up as a volunteer suddenly during emergencies.");
-            }
-            if (roleClean.includes("wise advisor") || roleClean.includes("pilar kebijaksanaan")) {
-                textRoleID += "Pilar Kebijaksanaan 🦉 / ";
-                textRoleEN += "The Wise Advisor 🦉 / ";
-                descListID.push("Tempat curhat paling nyaman pas anak-anak lagi burnout atau stres.");
-                descListEN.push("The go-to person when others are burning out or stressed.");
-            }
-
-            if (textRoleID === "") {
-                textRoleID = roleUser;
-                textRoleEN = roleUser;
-                descListID.push("Inilah kontribusi paling epik yang lu berikan ke organisasi.");
-                descListEN.push("This was your most epic contribution to the organization.");
-            } else {
-                textRoleID = textRoleID.slice(0, -3); // Buang garis miring di ujung
-                textRoleEN = textRoleEN.slice(0, -3);
-            }
-
-            let finalDescID = descListID.join(" ");
-            let finalDescEN = descListEN.join(" ");
-
-            elemenRole.innerText = (currentLang === "ID") ? textRoleID : textRoleEN;
-            sumRole.innerText = (currentLang === "ID") ? textRoleID : textRoleEN;
-            elemenRole.style.color = "#ffb3ff";
-
-            elemenDesc.innerText = (currentLang === "ID") ? finalDescID : finalDescEN;
-            sumDesc.innerText = (currentLang === "ID") ? finalDescID : finalDescEN;
+            elRole.innerText = (currentLang==="ID")?tRoleID:tRoleEN; sumRole.innerText = (currentLang==="ID")?tRoleID:tRoleEN; dashRole.innerText = (currentLang==="ID")?tRoleID:tRoleEN; elRole.style.color = "#ffb3ff";
+            elDesc.innerText = (currentLang==="ID")?dListID.join(" "):dListEN.join(" "); sumDesc.innerText = (currentLang==="ID")?dListID.join(" "):dListEN.join(" "); dashDesc.innerText = (currentLang==="ID")?dListID.join(" "):dListEN.join(" ");
 
             if (currentLang === "ID") {
                 document.getElementById('lbl-sapaan').innerText = "Halo " + namaPanjangUser + ", INI RAPORMU:";
-                document.getElementById('lbl-julukan-title').innerText = "JULUKAN TAHUN INI";
-                document.getElementById('lbl-role-title').innerText = "PERAN UTAMA / STRENGTH";
-                document.getElementById('lbl-stat-title').innerText = "STATISTIK PERJUANGAN";
-                document.getElementById('lbl-tidur-title').innerText = "Tidur Hilang";
-                document.getElementById('lbl-kopi-title').innerText = "Gelas Kopi";
-                document.getElementById('lbl-event-title').innerText = "Event Dijalanin";
-                document.getElementById('lbl-partner-title').innerText = "PARTNER IN CRIME";
-                document.getElementById('lbl-status-title').innerText = "STATUS LEGENDA";
-                
-                document.getElementById('lbl-sum-julukan-title').innerText = "Julukan Utama";
-                document.getElementById('lbl-sum-role-title').innerText = "Peran Utama / Strength";
-                document.getElementById('lbl-sum-tidur-title').innerText = "Tidur";
-                document.getElementById('lbl-sum-kopi-title').innerText = "Kopi";
-                document.getElementById('lbl-sum-event-title').innerText = "Event";
-                document.getElementById('lbl-sum-partner-title').innerText = "Partner";
-                document.getElementById('btn-share-text').innerText = "📸 Screenshot & Share";
-                document.getElementById('lbl-hint').innerText = "Ketuk di mana saja untuk lanjut ➔";
+                document.getElementById('lbl-julukan-title').innerText = "JULUKAN TAHUN INI"; document.getElementById('lbl-role-title').innerText = "PERAN UTAMA / STRENGTH"; document.getElementById('lbl-stat-title').innerText = "STATISTIK PERJUANGAN";
+                document.getElementById('lbl-tidur-title').innerText = "Tidur Hilang"; document.getElementById('lbl-kopi-title').innerText = "Gelas Kopi"; document.getElementById('lbl-event-title').innerText = "Event Dijalanin"; document.getElementById('lbl-partner-title').innerText = "PARTNER IN CRIME"; document.getElementById('lbl-status-title').innerText = "STATUS LEGENDA";
+                document.getElementById('lbl-sum-julukan-title').innerText = "Julukan"; document.getElementById('dash-lbl-julukan-title').innerText = "Julukan"; document.getElementById('lbl-sum-role-title').innerText = "Peran"; document.getElementById('dash-lbl-role-title').innerText = "Peran";
+                document.getElementById('lbl-sum-tidur-title').innerText = "Tidur"; document.getElementById('dash-lbl-tidur-title').innerText = "Tidur"; document.getElementById('lbl-sum-kopi-title').innerText = "Kopi"; document.getElementById('dash-lbl-kopi-title').innerText = "Kopi";
+                document.getElementById('lbl-sum-event-title').innerText = "Event"; document.getElementById('dash-lbl-event-title').innerText = "Event"; document.getElementById('lbl-sum-partner-title').innerText = "Partner"; document.getElementById('dash-lbl-partner-title').innerText = "Partner";
+                document.getElementById('btn-share-text').innerText = "📸 Screenshot & Share"; document.getElementById('dash-btn-share-text').innerText = "📸 Screenshot & Share"; document.getElementById('dash-btn-rewatch-text').innerText = "📼 Tonton Ulang Animasi";
+                document.getElementById('lbl-hint').innerText = (slideAktif===5) ? "Ketuk untuk ke Home ➔" : "Ketuk di mana saja untuk lanjut ➔";
             } else {
                 document.getElementById('lbl-sapaan').innerText = "Hello " + namaPanjangUser + ", YOUR WRAP IS HERE:";
-                document.getElementById('lbl-julukan-title').innerText = "TOP VIBE / NICKNAME";
-                document.getElementById('lbl-role-title').innerText = "CORE ROLE / STRENGTH";
-                document.getElementById('lbl-stat-title').innerText = "HUSTLE STATS";
-                document.getElementById('lbl-tidur-title').innerText = "Sleep Lost";
-                document.getElementById('lbl-kopi-title').innerText = "Coffee Cups";
-                document.getElementById('lbl-event-title').innerText = "Events Handled";
-                document.getElementById('lbl-partner-title').innerText = "PARTNER IN CRIME";
-                document.getElementById('lbl-status-title').innerText = "LEGEND STATUS";
-
-                document.getElementById('lbl-sum-julukan-title').innerText = "Top Vibe";
-                document.getElementById('lbl-sum-role-title').innerText = "Core Role / Strength";
-                document.getElementById('lbl-sum-tidur-title').innerText = "Sleep";
-                document.getElementById('lbl-sum-kopi-title').innerText = "Coffee";
-                document.getElementById('lbl-sum-event-title').innerText = "Events";
-                document.getElementById('lbl-sum-partner-title').innerText = "Partner";
-                document.getElementById('btn-share-text').innerText = "📸 Screenshot & Share";
-                document.getElementById('lbl-hint').innerText = "Tap anywhere to continue ➔";
+                document.getElementById('lbl-julukan-title').innerText = "TOP VIBE / NICKNAME"; document.getElementById('lbl-role-title').innerText = "CORE ROLE"; document.getElementById('lbl-stat-title').innerText = "HUSTLE STATS";
+                document.getElementById('lbl-tidur-title').innerText = "Sleep Lost"; document.getElementById('lbl-kopi-title').innerText = "Coffee Cups"; document.getElementById('lbl-event-title').innerText = "Events Handled"; document.getElementById('lbl-partner-title').innerText = "PARTNER IN CRIME"; document.getElementById('lbl-status-title').innerText = "LEGEND STATUS";
+                document.getElementById('lbl-sum-julukan-title').innerText = "Top Vibe"; document.getElementById('dash-lbl-julukan-title').innerText = "Top Vibe"; document.getElementById('lbl-sum-role-title').innerText = "Core Role"; document.getElementById('dash-lbl-role-title').innerText = "Core Role";
+                document.getElementById('lbl-sum-tidur-title').innerText = "Sleep"; document.getElementById('dash-lbl-tidur-title').innerText = "Sleep"; document.getElementById('lbl-sum-kopi-title').innerText = "Coffee"; document.getElementById('dash-lbl-kopi-title').innerText = "Coffee";
+                document.getElementById('lbl-sum-event-title').innerText = "Events"; document.getElementById('dash-lbl-event-title').innerText = "Events"; document.getElementById('lbl-sum-partner-title').innerText = "Partner"; document.getElementById('dash-lbl-partner-title').innerText = "Partner";
+                document.getElementById('btn-share-text').innerText = "📸 Screenshot & Share"; document.getElementById('dash-btn-share-text').innerText = "📸 Screenshot & Share"; document.getElementById('dash-btn-rewatch-text').innerText = "📼 Rewatch Animation";
+                document.getElementById('lbl-hint').innerText = (slideAktif===5) ? "Tap to enter Home ➔" : "Tap anywhere to continue ➔";
             }
 
             let org = kategoriUser.includes("mpk") ? "MPK" : "OSIS";
-            let statusJalan = "";
-            if (kategoriUser.includes("purna")) {
-                statusJalan = (currentLang === "ID") ? ("Legenda " + org) : (org + " Legend");
-            } else if (kategoriUser.includes("lanjut")) {
-                statusJalan = (currentLang === "ID") ? ("Garda Depan " + org) : ("Frontline " + org);
-            } else {
-                statusJalan = "New Challenger " + org;
-            }
-            document.getElementById('hof-status').innerText = statusJalan;
-            document.getElementById('sum-status').innerText = statusJalan;
-
-            if (slideAktif === 5) {
-                document.getElementById('lbl-hint').style.display = 'none';
-            } else {
-                document.getElementById('lbl-hint').style.display = 'block';
-            }
-        }
-
-        function lanjutkanSlide() {
-            document.getElementById('slide-' + slideAktif).classList.remove('active');
-            slideAktif++; 
-
-            if (slideAktif > totalSlide) {
-                slideAktif = 5; 
-            }
-
-            document.getElementById('slide-' + slideAktif).classList.add('active');
-            updateTampilanBahasa();
+            let statusJalan = kategoriUser.includes("purna") ? ((currentLang === "ID") ? "Legenda " + org : org + " Legend") : kategoriUser.includes("lanjut") ? ((currentLang === "ID") ? "Garda Depan " + org : "Frontline " + org) : "New Challenger " + org;
+            document.getElementById('hof-status').innerText = statusJalan; document.getElementById('sum-status').innerText = statusJalan; document.getElementById('dash-status').innerText = statusJalan;
         }
     </script>
 </body>
