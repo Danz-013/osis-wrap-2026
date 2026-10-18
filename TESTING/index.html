@@ -3,143 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSIS 2026 Wrap</title>
+    <title>OSIS 2026 Portal</title>
     <style>
-        /* RESET & SETUP DASAR */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: #110305; 
-            display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #F5EFE6; 
-        }
-
-        /* CONTAINER HP */
-        .mobile-container {
-            width: 100%; max-width: 414px; height: 100vh; max-height: 850px; 
-            background-image: url('bg-utama.jpg'); 
-            background-size: 100% 100%; background-position: center; background-repeat: no-repeat;
-            box-shadow: 0 0 30px rgba(0,0,0,0.9); position: relative;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; overflow: hidden;
-        }
-
-        /* STYLE UNTUK PINDAH-PINDAH LAYAR */
-        .screen {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            width: 100%; height: 100%;
-            transition: opacity 0.5s ease-in-out;
-            padding: 20px; 
-            position: absolute; 
-            top: 0; left: 0;
-            z-index: 10;
-        }
+        body { background-color: #050505; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #F5EFE6; }
         
-        .hidden { display: none !important; opacity: 0; }
-
-        /* TEKS ELEGAN */
-        h1, h2 { color: #E5C594; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .mobile-container { width: 100%; max-width: 414px; height: 100vh; max-height: 850px; background-image: linear-gradient(rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0.8)), url('bg-utama.jpg'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; box-shadow: 0 0 30px rgba(0,0,0,0.9); position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow: hidden; }
+        
+        .screen { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; transition: opacity 0.5s ease-in-out; padding: 15px; position: absolute; top: 0; left: 0; z-index: 10; }
+        .hidden { display: none !important; opacity: 0; pointer-events: none; }
+        h1, h2 { color: #E5C594; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
         p { font-size: 1rem; letter-spacing: 1px; opacity: 0.9; margin-bottom: 30px; }
-
-        /* DESAIN INPUT TEKS */
-        .input-gold {
-            background: rgba(0, 0, 0, 0.4); 
-            color: #F5EFE6; border: 2px solid #E5C594; padding: 15px 20px;
-            font-size: 1.1rem; border-radius: 30px; width: 80%; margin-bottom: 20px;
-            text-align: center; outline: none; font-family: inherit; transition: all 0.3s ease;
-            text-transform: uppercase;
-        }
+        .input-gold { background: rgba(0, 0, 0, 0.5); color: #F5EFE6; border: 2px solid #E5C594; padding: 15px 20px; font-size: 1.1rem; border-radius: 30px; width: 80%; margin-bottom: 20px; text-align: center; outline: none; font-family: inherit; transition: all 0.3s ease; text-transform: uppercase; }
         .input-gold::placeholder { color: rgba(245, 239, 230, 0.5); text-transform: none; }
-        .input-gold:focus { box-shadow: 0 0 15px rgba(229, 197, 148, 0.6); background: rgba(0, 0, 0, 0.6); }
-
-        /* DESAIN TOMBOL */
-        .btn-gold {
-            background: transparent; color: #E5C594; border: 2px solid #E5C594;
-            padding: 12px 30px; font-size: 1.1rem; font-weight: bold;
-            border-radius: 30px; cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(229, 197, 148, 0.2); width: 80%; margin-bottom: 15px;
-        }
-        .btn-gold:hover:not(:disabled) { background: #E5C594; color: #1F060A; box-shadow: 0 4px 20px rgba(229, 197, 148, 0.6); }
+        .input-gold:focus { box-shadow: 0 0 15px rgba(229, 197, 148, 0.6); background: rgba(0, 0, 0, 0.7); }
+        .btn-gold { background: transparent; color: #E5C594; border: 2px solid #E5C594; padding: 10px 20px; font-size: 1rem; font-weight: bold; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(229, 197, 148, 0.2); width: 100%; margin-bottom: 8px; }
+        .btn-gold:hover:not(:disabled) { background: #E5C594; color: #050505; box-shadow: 0 4px 20px rgba(229, 197, 148, 0.6); }
         .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        /* --- KUSUS HALAMAN VIDEO --- */
         #video-page { padding: 0; background-color: #000; z-index: 20; }
         .full-video { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* --- MESSAGE PAGE & AUTO SCROLL UP ANIMATION --- */
+        #message-page { background-color: rgba(5, 5, 5, 0.9); z-index: 15; align-items: center; justify-content: center; padding: 30px 20px; }
+        .message-box { width: 100%; max-height: 380px; overflow-y: auto; scroll-behavior: smooth; text-align: left; padding: 10px; margin-bottom: 20px; scrollbar-width: none; }
+        .message-box::-webkit-scrollbar { display: none; }
+        
+        #typewriter-text { font-size: 0.95rem; line-height: 1.6; color: #F5EFE6; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); display: inline; }
+        .cursor { display: inline-block; width: 3px; background-color: #E5C594; margin-left: 2px; animation: blink 0.7s infinite; vertical-align: middle; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
 
-        /* --- KUSUS EFEK MESIN TIK --- */
-        #message-page {
-            background-color: rgba(17, 3, 5, 0.85); /* Latar belakang agak gelap transparan nutupin background */
-            z-index: 15;
-            justify-content: center;
-        }
+        /* --- WRAP CARD --- */
+        #hall-of-fame-page { background-color: rgba(5, 5, 5, 0.5); z-index: 25; }
+        .wrap-card { background: rgba(15, 15, 15, 0.85); border: 2px solid #E5C594; border-radius: 20px; padding: 20px 15px; width: 96%; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.9); backdrop-filter: blur(8px); text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
+        .lang-toggle { position: absolute; top: 10px; right: 10px; background: rgba(229, 197, 148, 0.1); border: 1px solid #E5C594; color: #E5C594; padding: 4px 9px; font-size: 0.7rem; font-weight: bold; border-radius: 10px; cursor: pointer; z-index: 30; }
+        .wrap-card h2 { font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 5px; color: #E5C594; }
+        .slide-content { display: none; width: 100%; animation: fadeIn 0.4s ease-in-out; cursor: pointer; }
+        .slide-content.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .stat-title-lg { font-size: 0.7rem; color: rgba(245, 239, 230, 0.6); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+        .stat-value-lg { font-size: 1.2rem; font-weight: bold; color: #E5C594; text-shadow: 1px 1px 8px rgba(229, 197, 148, 0.4); margin-bottom: 6px; }
+        .tap-hint { margin-top: 10px; font-size: 0.75rem; color: rgba(229, 197, 148, 0.8); font-weight: bold; letter-spacing: 1px; animation: bounce 1.5s infinite; cursor: pointer; background: rgba(229,197,148,0.1); padding: 5px 15px; border-radius: 15px;}
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+        .summary-header { border-bottom: 1px solid rgba(229, 197, 148, 0.2); padding-bottom: 6px; margin-bottom: 6px; width: 100%; text-align: center; }
+        .summary-name { font-size: 0.95rem; font-weight: bold; color: #E5C594; }
+        .summary-status { font-size: 0.7rem; color: #ff99bb; font-weight: bold; display: block; }
+        .summary-section { background: rgba(229, 197, 148, 0.04); border: 1px solid rgba(229, 197, 148, 0.15); border-radius: 8px; padding: 6px 10px; width: 100%; margin-bottom: 6px; text-align: left; }
+        .sum-label { font-size: 0.6rem; color: rgba(245,239,230,0.5); text-transform: uppercase; display: block; }
+        .sum-val { font-size: 0.85rem; font-weight: bold; color: #E5C594; }
+        .sum-desc { font-size: 0.68rem; color: rgba(245,239,230,0.75); font-style: italic; margin-top: 1px; line-height: 1.2; }
+        .summary-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; width: 100%; margin-bottom: 6px; }
+        .sum-stat-box { background: rgba(229, 197, 148, 0.06); border: 1px solid rgba(229, 197, 148, 0.15); border-radius: 6px; padding: 5px; text-align: center; }
+        .sum-stat-val { font-size: 0.8rem; font-weight: bold; color: #E5C594; margin-top: 2px; }
+        .btn-share { background: #E5C594; color: #050505; border: none; padding: 7px 14px; font-size: 0.8rem; font-weight: bold; border-radius: 20px; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(229, 197, 148, 0.4); margin-bottom: 6px; }
 
-        #typewriter-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #F5EFE6;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-            min-height: 150px; 
-            margin-bottom: 20px;
-        }
+        /* --- DASHBOARD HOME --- */
+        #main-menu-page { background-color: rgba(5, 5, 5, 0.2); z-index: 30; justify-content: flex-start; padding: 15px 10px; }
+        .top-nav { display: flex; gap: 6px; width: 100%; overflow-x: auto; padding-bottom: 10px; border-bottom: 1px solid rgba(229, 197, 148, 0.3); margin-bottom: 12px; scrollbar-width: none; flex-shrink: 0; white-space: nowrap; cursor: grab; user-select: none; }
+        .top-nav:active { cursor: grabbing; }
+        .top-nav::-webkit-scrollbar { display: none; }
+        .nav-btn { background: rgba(15, 15, 15, 0.6); color: rgba(245, 239, 230, 0.8); border: 1px solid rgba(245, 239, 230, 0.3); padding: 5px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: bold; cursor: pointer; white-space: nowrap; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 4px; pointer-events: auto; backdrop-filter: blur(4px); }
+        .nav-btn.active { background: rgba(229, 197, 148, 0.25); color: #E5C594; border-color: #E5C594; }
+        
+        .dashboard-card { background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(8px); border: 2px solid #E5C594; border-radius: 15px; padding: 12px 10px; width: 100%; max-height: calc(100vh - 90px); overflow-y: auto; box-shadow: 0 5px 25px rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: center; }
 
-        .cursor {
-            display: inline-block; width: 3px; background-color: #E5C594;
-            margin-left: 2px; animation: blink 0.7s infinite;
-        }
+        /* --- ADMIN PANEL --- */
+        #admin-panel-page { background-color: rgba(5, 5, 5, 0.2); z-index: 35; justify-content: flex-start; padding: 15px 10px; }
+        .admin-card { background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(8px); border: 2px solid #ff99bb; border-radius: 15px; padding: 12px; width: 100%; text-align: left; box-shadow: 0 5px 25px rgba(0,0,0,0.8); display: flex; flex-direction: column; max-height: 92vh; overflow-y: auto; }
+        .admin-card h2 { color: #ff99bb; font-size: 1rem; margin-bottom: 8px; text-align: center; }
+        .admin-input { background: rgba(0,0,0,0.5); color: #F5EFE6; border: 1px solid #ff99bb; padding: 8px 12px; font-size: 0.85rem; border-radius: 8px; width: 100%; margin-bottom: 8px; outline: none; }
+        .user-list-container { max-height: 150px; overflow-y: auto; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 5px; border: 1px solid rgba(255,153,187,0.2); margin-bottom: 8px; }
+        .user-item { display: flex; justify-content: space-between; align-items: center; background: rgba(10,10,10,0.6); padding: 6px 8px; border-radius: 6px; margin-bottom: 5px; border: 1px solid rgba(255,153,187,0.3); }
+        .user-info { display: flex; flex-direction: column; text-align: left; }
+        .user-name { font-size: 0.75rem; font-weight: bold; color: #F5EFE6; }
+        .user-code { font-size: 0.55rem; color: rgba(245,239,230,0.6); font-family: monospace; }
+        .user-status { font-size: 0.6rem; font-weight: bold; margin-top: 1px; }
+        .status-sudah { color: #66ffcc; }
+        .status-belum { color: #ff99bb; }
+        .admin-btn-group { display: flex; gap: 5px; }
+        .btn-action-small { background: #ff99bb; color: #050505; border: none; padding: 4px 8px; font-size: 0.65rem; font-weight: bold; border-radius: 5px; cursor: pointer; }
+        .btn-preview-small { background: #66ffcc; color: #050505; border: none; padding: 4px 8px; font-size: 0.65rem; font-weight: bold; border-radius: 5px; cursor: pointer; }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-        }
+        /* --- GALERI PAGE --- */
+        #galeri-page { background-color: rgba(5, 5, 5, 0.2); z-index: 32; justify-content: flex-start; padding: 15px 10px; }
+        .galeri-card { background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(8px); border: 2px solid #E5C594; border-radius: 15px; padding: 12px; width: 100%; max-height: calc(100vh - 80px); overflow-y: auto; box-shadow: 0 5px 25px rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: center; }
+        .galeri-grid { display: flex; flex-direction: column; gap: 14px; width: 100%; margin-top: 10px; }
+        .galeri-item { background: rgba(25, 25, 25, 0.8); border: 1px solid rgba(229,197,148,0.35); border-radius: 14px; overflow: hidden; text-align: left; box-shadow: 0 6px 20px rgba(0,0,0,0.6); transition: transform 0.3s ease, border-color 0.3s ease; }
+        .galeri-item:hover { transform: translateY(-3px); border-color: rgba(229,197,148,0.7); }
+        .galeri-img-container { width: 100%; aspect-ratio: 16 / 10; overflow: hidden; position: relative; background: #050505; }
+        .galeri-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .galeri-item:hover .galeri-img { transform: scale(1.04); }
+        .galeri-title { font-size: 0.85rem; font-weight: bold; color: #E5C594; padding: 10px 14px; background: linear-gradient(to top, rgba(5,5,5,0.95), rgba(15,15,15,0.85)); border-top: 1px solid rgba(229,197,148,0.15); letter-spacing: 0.5px; }
+
+        /* --- BUKU TAHUNAN / ANGGOTA PAGE --- */
+        #anggota-page { background-color: rgba(5, 5, 5, 0.2); z-index: 33; justify-content: flex-start; padding: 15px 10px; }
+        .yearbook-card-container { background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(8px); border: 2px solid #E5C594; border-radius: 15px; padding: 12px; width: 100%; max-height: calc(100vh - 80px); overflow-y: auto; box-shadow: 0 5px 25px rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: center; }
+        .section-title { font-size: 0.75rem; font-weight: bold; color: #E5C594; text-transform: uppercase; letter-spacing: 1.5px; margin: 15px 0 8px 0; text-align: center; border-bottom: 1px dashed rgba(229,197,148,0.3); padding-bottom: 4px; width: 100%; }
+        .section-divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, rgba(229,197,148,0.5), transparent); margin: 20px 0 10px 0; }
+        
+        /* Sub border untuk MPK & OSIS */
+        .sub-border { width: 100%; text-align: left; margin: 8px 0 6px 0; font-size: 0.65rem; font-weight: bold; padding-bottom: 4px; letter-spacing: 1px; }
+        .sub-mpk { color: #66ffcc; border-bottom: 1px solid rgba(102, 255, 204, 0.3); }
+        .sub-osis { color: #ff99bb; border-bottom: 1px solid rgba(255, 153, 187, 0.3); margin-top: 15px; }
+
+        .yearbook-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+        .yearbook-item { background: rgba(25, 25, 25, 0.9); border: 1px solid rgba(229,197,148,0.3); border-radius: 8px; overflow: hidden; text-align: center; display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: transform 0.2s ease; }
+        .yearbook-item:hover { transform: translateY(-2px); border-color: rgba(229,197,148,0.7); }
+        .yearbook-img-box { width: 100%; aspect-ratio: 1 / 1; overflow: hidden; background: #050505; }
+        .yearbook-img { width: 100%; height: 100%; object-fit: cover; }
+        .yearbook-info { padding: 6px 4px; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; }
+        
+        .yearbook-name { font-size: 0.6rem; font-weight: bold; color: #E5C594; word-break: break-word; line-height: 1.2; }
+        .yearbook-jabatan { font-size: 0.5rem; color: #66ffcc; font-weight: bold; margin-top: 1px; }
+        .yearbook-kelas { font-size: 0.48rem; color: rgba(229, 197, 148, 0.8); margin-bottom: 2px; font-weight: bold; }
+        .yearbook-quote { font-size: 0.48rem; color: rgba(245,239,230,0.7); font-style: italic; line-height: 1.1; word-break: break-word; margin-top: 2px; }
     </style>
 </head>
 <body>
 
     <div class="mobile-container">
         
-        <!-- HALAMAN 0: LOGIN -->
         <div id="login-page" class="screen">
-            <h1>Welcome Access</h1>
-            <p>Masukkan Kode Akses untuk memulai</p>
-            <input type="text" id="input-kode" class="input-gold" placeholder="Ketik kodemu di sini..." autocomplete="off">
+            <h1>WELCOME LADIES & GENTLEMEN</h1>
+            <p>Masukan Kode akses untuk memulai</p>
+            <input type="text" id="input-kode" class="input-gold" placeholder="Ketik kodemu di sini..." autocomplete="off" onkeypress="if(event.key === 'Enter') prosesLogin()">
             <button id="btn-login" class="btn-gold" onclick="prosesLogin()">Enter</button>
         </div>
 
-        <!-- HALAMAN 1: LANDING PAGE -->
         <div id="landing-page" class="screen hidden">
             <h1 id="user-greeting">Hai!</h1>
-            <p>This is Your OSIS 2026 Wrap</p>
+            <p>This is Your OSIS & MPK 2026 Wrap</p>
             <button class="btn-gold" onclick="mulaiPerjalanan()">Start Journey</button>
         </div>
 
-        <!-- HALAMAN 2: LAYAR VIDEO -->
         <div id="video-page" class="screen hidden">
-            <video id="intro-video" class="full-video" playsinline>
-                <source src="video.mp4" type="video/mp4">
-            </video>
+            <video id="intro-video" class="full-video" playsinline><source src="video.mp4" type="video/mp4"></video>
         </div>
 
-        <!-- HALAMAN 3: PESAN TYPEWRITER (Setelah Video) -->
+        <!-- MESSAGE PAGE DENGAN BOX AUTO-SCROLL SMOOTH -->
         <div id="message-page" class="screen hidden">
-            <p><span id="typewriter-text"></span><span class="cursor">|</span></p>
-            
-            <button id="btn-lanjut" class="btn-gold hidden" onclick="masukHallOfFame()" style="margin-top: 30px;">Lihat Rapormu</button>
+            <div class="message-box" id="messageBoxScroll">
+                <p style="margin-bottom: 0;"><span id="typewriter-text"></span><span class="cursor">|</span></p>
+            </div>
+            <button id="btn-lanjut" class="btn-gold hidden" onclick="masukHallOfFame()" style="margin-top: 15px; width: 100%;">Lihat Rapormu</button>
+        </div>
+
+        <!-- HALL OF FAME -->
+        <div id="hall-of-fame-page" class="screen hidden">
+            <div class="wrap-card">
+                <button id="btn-lang" class="lang-toggle" onclick="toggleBahasa()">🌐 EN</button>
+                <h2>OSIS 2026 WRAP</h2>
+
+                <div id="slide-1" class="slide-content active" onclick="lanjutkanSlide()">
+                    <div class="stat-title-lg" id="lbl-sapaan">Halo Nama, INI RAPORMU:</div>
+                    <div class="stat-title-lg" id="lbl-julukan-title" style="margin-bottom: 5px;">JULUKAN TAHUN INI</div>
+                    <div class="stat-value-lg" id="hof-julukan">-</div>
+                </div>
+
+                <div id="slide-2" class="slide-content" onclick="lanjutkanSlide()">
+                    <div class="stat-title-lg" id="lbl-role-title">PERAN UTAMA / STRENGTH</div>
+                    <div class="stat-value-lg" id="hof-role" style="color: #66ffcc; font-size: 1.1rem;">-</div>
+                    <p id="hof-role-desc" style="font-size: 0.8rem; color: rgba(245,239,230,0.7); font-style: italic; padding: 0 10px;">-</p>
+                </div>
+
+                <div id="slide-3" class="slide-content" onclick="lanjutkanSlide()">
+                    <div class="stat-title-lg" id="lbl-stat-title">STATISTIK PERJUANGAN</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%;">
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-tidur-title">Tidur Hilang</span><span class="sum-val" id="hof-tidur">-</span></div>
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-kopi-title">Gelas Kopi</span><span class="sum-val" id="hof-kopi">-</span></div>
+                        <div class="sum-stat-box" style="grid-column: span 2;"><span class="sum-title" id="lbl-event-title">Event Dijalanin</span><span class="sum-val" id="hof-event">-</span></div>
+                    </div>
+                </div>
+
+                <div id="slide-4" class="slide-content" onclick="lanjutkanSlide()">
+                    <div class="stat-title-lg" id="lbl-partner-title">PARTNER IN CRIME</div>
+                    <div class="stat-value-lg" id="hof-partner" style="font-size: 1.1rem; margin-bottom: 12px; color: #ff99bb;">-</div>
+                    <div class="stat-title-lg" id="lbl-status-title">STATUS LEGENDA</div>
+                    <div class="stat-value-lg" id="hof-status" style="font-size: 1.2rem;">-</div>
+                </div>
+
+                <div id="slide-5" class="slide-content">
+                    <div class="summary-header"><span class="summary-name" id="sum-nama">-</span><span class="summary-status" id="sum-status">-</span></div>
+                    <div class="summary-section" style="padding: 6px 10px;"><span class="sum-label" id="lbl-sum-julukan-title">Julukan Utama</span><span class="sum-val" id="sum-julukan" style="color: #E5C594;">-</span></div>
+                    <div class="summary-section"><span class="sum-label" id="lbl-sum-role-title">Peran Utama</span><span class="sum-val" id="sum-role" style="color: #66ffcc; font-size: 0.85rem;">-</span><p class="sum-desc" id="sum-role-desc">-</p></div>
+                    <div class="summary-stats-grid">
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-sum-tidur-title">Tidur</span><span class="sum-stat-val" id="sum-tidur">-</span></div>
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-sum-kopi-title">Kopi</span><span class="sum-stat-val" id="sum-kopi">-</span></div>
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-sum-event-title">Event</span><span class="sum-stat-val" id="sum-event">-</span></div>
+                        <div class="sum-stat-box"><span class="sum-title" id="lbl-sum-partner-title">Partner</span><span class="sum-stat-val" id="sum-partner" style="font-size: 0.7rem; color: #ff99bb;">-</span></div>
+                    </div>
+                    <button class="btn-share" id="btn-share-text" onclick="alert(currentLang === 'ID' ? 'Screenshot halaman ini dan pamerin ke Story IG kamu!' : 'Screenshot this page and share it to your IG Story!')">📸 Screenshot & Share</button>
+                </div>
+                <div class="tap-hint" id="lbl-hint" onclick="lanjutkanSlide()">Ketuk untuk lanjut ➔</div>
+            </div>
+        </div>
+
+        <!-- --- MAIN MENU DASHBOARD --- -->
+        <div id="main-menu-page" class="screen hidden">
+            <div class="top-nav" id="topNavScroll">
+                <button class="nav-btn active" onclick="bukaHomeDashboard()">📊 Home</button>
+                <button class="nav-btn" onclick="alert('Fitur Program Kerja Segera Hadir!')">📋 Proker</button>
+                <button class="nav-btn" onclick="bukaAnggota()">👥 Anggota</button>
+                <button class="nav-btn" onclick="bukaGaleri()">🖼️ Galeri</button>
+                <button class="nav-btn" id="btn-audio" onclick="toggleAudio()">🔊 Musik: On</button>
+                <button class="nav-btn" id="dash-lang-btn" onclick="toggleBahasa()">🌐 ID</button>
+                <button class="nav-btn danger" id="btn-keluar-menu" onclick="logout()">🚪 Logout</button>
+            </div>
+
+            <div class="dashboard-card" id="home-dashboard-content">
+                <h2 style="font-size: 0.95rem; margin-bottom: 6px;">PORTAL REKAP 2026</h2>
+                <div class="summary-header"><span class="summary-name" id="dash-nama">-</span><span class="summary-status" id="dash-status">-</span></div>
+                <div class="summary-section" style="padding: 5px 8px;"><span class="sum-label" id="dash-lbl-julukan-title">Julukan Utama</span><span class="sum-val" id="dash-julukan" style="color: #E5C594; font-size: 0.85rem;">-</span></div>
+                <div class="summary-section" style="padding: 5px 8px;"><span class="sum-label" id="dash-lbl-role-title">Peran Utama</span><span class="sum-val" id="dash-role" style="color: #66ffcc; font-size: 0.8rem;">-</span><p class="sum-desc" id="dash-role-desc" style="font-size: 0.65rem;">-</p></div>
+                <div class="summary-stats-grid" style="margin-bottom: 5px;">
+                    <div class="sum-stat-box"><span class="sum-title" id="dash-lbl-tidur-title">Tidur</span><span class="sum-stat-val" id="dash-tidur">-</span></div>
+                    <div class="sum-stat-box"><span class="sum-title" id="dash-lbl-kopi-title">Kopi</span><span class="sum-stat-val" id="dash-kopi">-</span></div>
+                    <div class="sum-stat-box"><span class="sum-title" id="dash-lbl-event-title">Event</span><span class="sum-stat-val" id="dash-event">-</span></div>
+                    <div class="sum-stat-box"><span class="sum-title" id="dash-lbl-partner-title">Partner</span><span class="sum-stat-val" id="dash-partner" style="font-size: 0.65rem; color: #ff99bb;">-</span></div>
+                </div>
+                <button class="btn-share" id="dash-btn-share-text" onclick="alert(currentLang === 'ID' ? 'Screenshot halaman ini dan pamerin ke Story IG kamu!' : 'Screenshot this page and share it to your IG Story!')" style="margin-bottom: 5px; padding: 6px;">📸 Screenshot & Share</button>
+                <button class="btn-gold" id="dash-btn-rewatch-text" style="width: 100%; font-size: 0.75rem; padding: 6px; margin-bottom: 0;" onclick="rewatchWrap()">📼 Tonton Ulang Animasi</button>
+            </div>
+        </div>
+
+        <!-- --- GALERI PAGE --- -->
+        <div id="galeri-page" class="screen hidden">
+            <div class="top-nav" id="topNavScroll2">
+                <button class="nav-btn" onclick="bukaHomeDashboard()">📊 Home</button>
+                <button class="nav-btn active">🖼️ Galeri</button>
+                <button class="nav-btn danger" onclick="logout()">🚪 Logout</button>
+            </div>
+            <div class="galeri-card">
+                <h2>📸 GALERI KEGIATAN</h2>
+                <div class="galeri-grid" id="galeri-container">
+                    <div style="text-align:center; font-size:0.8rem; color:#E5C594; padding:20px;">Memuat foto galeri...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- ANGGOTA / BUKU TAHUNAN PAGE --- -->
+        <div id="anggota-page" class="screen hidden">
+            <div class="top-nav" id="topNavScroll3">
+                <button class="nav-btn" onclick="bukaHomeDashboard()">📊 Home</button>
+                <button class="nav-btn active">👥 Anggota</button>
+                <button class="nav-btn danger" onclick="logout()">🚪 Logout</button>
+            </div>
+            <div class="yearbook-card-container">
+                <h2>🎓 BUKU TAHUNAN</h2>
+                
+                <!-- SECTION 1: PEMBINA -->
+                <div class="section-title">🏛️ PEMBINA OSIS / MPK 🏛️</div>
+                <div class="yearbook-grid" id="grid-pembina">
+                    <div style="grid-column: span 3; text-align:center; font-size:0.75rem; color:#E5C594; padding:10px;">Memuat data...</div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION 2: ANGGOTA SEKARANG -->
+                <div class="section-title">✨ ANGGOTA SEKARANG ✨</div>
+                
+                <!-- SUB-SECTION MPK -->
+                <div class="sub-border sub-mpk">► PENGURUS MPK</div>
+                <div class="yearbook-grid" id="grid-anggota-sekarang-mpk">
+                    <div style="grid-column: span 3; text-align:center; font-size:0.75rem; color:#E5C594; padding:10px;">Memuat data...</div>
+                </div>
+
+                <!-- SUB-SECTION OSIS -->
+                <div class="sub-border sub-osis">► PENGURUS OSIS</div>
+                <div class="yearbook-grid" id="grid-anggota-sekarang-osis">
+                    <div style="grid-column: span 3; text-align:center; font-size:0.75rem; color:#E5C594; padding:10px;">Memuat data...</div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- SECTION 3: ANGGOTA BARU -->
+                <div class="section-title">🌱 ANGGOTA BARU 🌱</div>
+
+                <!-- SUB-SECTION MPK BARU -->
+                <div class="sub-border sub-mpk">► CALON PENGURUS MPK</div>
+                <div class="yearbook-grid" id="grid-anggota-baru-mpk">
+                    <div style="grid-column: span 3; text-align:center; font-size:0.75rem; color:#E5C594; padding:10px;">Memuat data...</div>
+                </div>
+
+                <!-- SUB-SECTION OSIS BARU -->
+                <div class="sub-border sub-osis">► CALON PENGURUS OSIS</div>
+                <div class="yearbook-grid" id="grid-anggota-baru-osis">
+                    <div style="grid-column: span 3; text-align:center; font-size:0.75rem; color:#E5C594; padding:10px;">Memuat data...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- ADMIN PANEL PAGE --- -->
+        <div id="admin-panel-page" class="screen hidden">
+            <div class="admin-card">
+                <h2>🛡️ PANEL ADMIN</h2>
+                
+                <label style="font-size: 0.7rem; color: #ff99bb; font-weight: bold; margin-bottom: 4px; display: block; text-transform: uppercase;">Cari / Reset / Preview User:</label>
+                <input type="text" id="admin-search" class="admin-input" placeholder="🔍 Cari nama atau kode..." onkeyup="filterAdminList()">
+                <div class="user-list-container" id="admin-user-list">
+                    <div style="text-align:center; color:#E5C594; font-size:0.75rem; padding:10px;">Memuat data user...</div>
+                </div>
+
+                <!-- FORM TAMBAH FOTO GALERI KHUSUS ADMIN -->
+                <div style="border-top: 1px solid rgba(255,153,187,0.3); padding-top: 8px; margin-top: 4px;">
+                    <label style="font-size: 0.7rem; color: #66ffcc; font-weight: bold; margin-bottom: 3px; display: block; text-transform: uppercase;">+ Tambah Foto ke Galeri:</label>
+                    <input type="text" id="admin-foto-judul" class="admin-input" placeholder="Judul Kegiatan" autocomplete="off" style="margin-bottom: 5px; padding: 6px 10px;">
+                    <input type="text" id="admin-foto-url" class="admin-input" placeholder="URL Link Gambar" autocomplete="off" style="margin-bottom: 5px; padding: 6px 10px;">
+                    <button class="btn-gold" style="width: 100%; font-size: 0.75rem; padding: 6px; color: #66ffcc; border-color: #66ffcc;" onclick="tambahFotoGaleri()">Simpan & Upload Foto</button>
+                </div>
+
+                <div style="margin-top: 8px; border-top: 1px solid rgba(255,153,187,0.2); padding-top: 6px;">
+                    <button class="btn-gold" style="width: 100%; font-size: 0.75rem; padding: 5px;" onclick="logout()">🚪 Keluar Admin</button>
+                </div>
+            </div>
         </div>
 
     </div>
 
     <!-- LOGIKA JAVASCRIPT -->
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbzC8jEw3PMCbGF33oBKkl7KROsEi5UAbFlhzlTDgcpFJKW_viIeYnTomFaSwN6oLhFn/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbyzn_tewJcK5M5odkzX-FafCWzfJBmNwm5S-dklEoeT8MJFixTR66MxusgVocnEPzVY/exec";
         
-        let kategoriUser = ""; 
-        let namaUser = "";
+        let kategoriUser = "", namaUser = "", julukanUser = "", jabatanUser = "", kelasUser = "";
+        let namaPanjangUser = "", jumlahEventUser = "", partnerUser = "", roleUser = "", statusNontonUser = "";
+        let currentKode = "";
+        let allUsersData = []; 
+        let isPreviewMode = false;
+
+        const playlist = ["lagu1.mp3", "lagu2.mp3", "lagu3.mp3", "lagu4.mp3", "lagu5.mp3", "lagu6.mp3", "lagu7.mp3"]; 
+        let bgMusic = new Audio(); let isMuted = false;
+        let slideAktif = 1; const totalSlide = 5; let currentLang = "ID"; 
 
         async function prosesLogin() {
-            let kodeInput = document.getElementById('input-kode').value;
-            if (kodeInput.trim() === "") { alert("Kode akses belum diisi!"); return; }
+            let kodeInput = document.getElementById('input-kode').value.trim();
+            if (kodeInput === "") { alert("Kode akses belum diisi!"); return; }
+            currentKode = kodeInput;
 
             let btn = document.getElementById('btn-login');
             btn.innerText = "Mengecek Data..."; btn.disabled = true;
@@ -150,85 +347,423 @@
 
                 if (data.status === "success") {
                     namaUser = data.nama;
-                    kategoriUser = data.kategori.toLowerCase(); 
-                    
-                    document.getElementById('user-greeting').innerText = "Hai " + namaUser + "!";
+                    kategoriUser = String(data.kategori || "").toLowerCase().trim(); 
                     document.getElementById('login-page').classList.add('hidden');
-                    document.getElementById('landing-page').classList.remove('hidden');
+
+                    if (kategoriUser.includes("admin")) {
+                        document.getElementById('admin-panel-page').classList.remove('hidden');
+                        fetchAdminData(); 
+                        btn.innerText = "Enter"; btn.disabled = false;
+                        return;
+                    }
+                    
+                    setUserDataAndStart(data);
                 } else {
                     alert("Akses ditolak! Kode tidak ditemukan.");
                 }
             } catch (error) {
                 alert("Jaringan error, coba lagi nanti!"); console.error(error);
             }
-
             btn.innerText = "Enter"; btn.disabled = false;
         }
 
-        // --- FUNGSI START DIMODIFIKASI BUAT TESTING ---
+        function setUserDataAndStart(data) {
+            julukanUser = String(data.julukan || "Misterius"); 
+            namaPanjangUser = String(data.namaPanjang || data.nama || ""); 
+            roleUser = String(data.role || "Andalan Organisasi 🌟"); 
+            jumlahEventUser = String(data.jumlahEvent || "0");
+            partnerUser = String(data.partner || "Sendirian");
+            statusNontonUser = String(data.statusNonton || "BELUM");
+            namaUser = String(data.nama || "Sobat");
+            
+            kelasUser = String(data.kelas || "").toLowerCase();
+            jabatanUser = String(data.jabatan || "").toLowerCase();
+
+            document.getElementById('user-greeting').innerText = "Hai " + namaUser + "!";
+            
+            if (isPreviewMode) {
+                document.getElementById('admin-panel-page').classList.add('hidden');
+                let btnKeluar = document.getElementById('btn-keluar-menu');
+                btnKeluar.innerText = "🛡️ Kembali ke Admin";
+                btnKeluar.className = "nav-btn active";
+                btnKeluar.onclick = kembaliKeAdmin;
+                bukaMainMenu();
+                return;
+            }
+
+            if (statusNontonUser === "SUDAH") { bukaMainMenu(); } 
+            else { document.getElementById('landing-page').classList.remove('hidden'); }
+        }
+
+        async function adminPreviewUser(targetKode, btnElement) { 
+            let btn = btnElement || event.target; 
+            let oldText = btn.innerText;
+            btn.innerText = "..."; 
+            btn.disabled = true; 
+            try { 
+                let response = await fetch(API_URL + "?kode=" + encodeURIComponent(targetKode)); 
+                let data = await response.json(); 
+                if (data.status === "success") { 
+                    isPreviewMode = true; 
+                    setUserDataAndStart(data); 
+                } else { 
+                    alert("Gagal memuat preview data user."); 
+                    btn.innerText = oldText; 
+                    btn.disabled = false; 
+                } 
+            } catch (e) { 
+                alert("Terjadi kesalahan jaringan."); 
+                btn.innerText = oldText; 
+                btn.disabled = false; 
+            } 
+        }
+
+        function kembaliKeAdmin() { 
+            isPreviewMode = false; 
+            document.getElementById('main-menu-page').classList.add('hidden'); 
+            document.getElementById('anggota-page').classList.add('hidden'); 
+            document.getElementById('admin-panel-page').classList.remove('hidden'); 
+            let btnKeluar = document.getElementById('btn-keluar-menu'); 
+            btnKeluar.innerText = "🚪 Logout"; 
+            btnKeluar.className = "nav-btn danger"; 
+            btnKeluar.onclick = logout; 
+        }
+        
+        async function fetchAdminData() { 
+            let container = document.getElementById('admin-user-list'); 
+            try { 
+                let res = await fetch(API_URL + "?action=get_all_users"); 
+                let data = await res.json(); 
+                if (data.status === "success") { 
+                    allUsersData = data.data; 
+                    renderAdminList(allUsersData); 
+                } else { 
+                    container.innerHTML = "<div style='color:red; font-size:0.75rem; text-align:center;'>Gagal memuat data.</div>"; 
+                } 
+            } catch (e) { 
+                container.innerHTML = "<div style='color:red; font-size:0.75rem; text-align:center;'>Error jaringan.</div>"; 
+            } 
+        }
+        
+        function renderAdminList(users) { 
+            let container = document.getElementById('admin-user-list'); 
+            container.innerHTML = ""; 
+            if (users.length === 0) { 
+                container.innerHTML = "<div style='text-align:center; font-size:0.75rem; padding:10px;'>Tidak ada user ditemukan.</div>"; 
+                return; 
+            } 
+            users.forEach(user => { 
+                let statusClass = (user.statusNonton === "SUDAH") ? "status-sudah" : "status-belum"; 
+                let statusText = (user.statusNonton === "SUDAH") ? "SUDAH NONTON" : "BELUM NONTON"; 
+                let itemHtml = `<div class="user-item"><div class="user-info"><span class="user-name">${user.nama}</span><span class="user-code">Kode: ${user.kode}</span><span class="user-status ${statusClass}">● ${statusText}</span></div><div class="admin-btn-group"><button class="btn-preview-small" onclick="adminPreviewUser('${user.kode}', this)">Preview</button><button class="btn-action-small" onclick="adminResetUser('${user.kode}', this)" ${(user.statusNonton !== "SUDAH") ? "disabled" : ""}>Reset</button></div></div>`; 
+                container.innerHTML += itemHtml; 
+            }); 
+        }
+
+        function filterAdminList() { 
+            let keyword = document.getElementById('admin-search').value.toLowerCase(); 
+            let filtered = allUsersData.filter(u => u.nama.toLowerCase().includes(keyword) || u.kode.toLowerCase().includes(keyword)); 
+            renderAdminList(filtered); 
+        }
+        
+        async function adminResetUser(targetKode, btnElement) { 
+            if (!confirm(`Yakin mau reset status nonton untuk kode ${targetKode}?`)) return; 
+            btnElement.innerText = "..."; 
+            btnElement.disabled = true; 
+            try { 
+                let res = await fetch(API_URL + "?kode=" + encodeURIComponent(targetKode) + "&action=reset"); 
+                let result = await res.json(); 
+                if (result.status === "success") { 
+                    let index = allUsersData.findIndex(u => u.kode === targetKode); 
+                    if(index !== -1) { allUsersData[index].statusNonton = "BELUM"; } 
+                    filterAdminList(); 
+                } else { 
+                    alert("Gagal mereset."); 
+                    btnElement.innerText = "Reset"; 
+                    btnElement.disabled = false; 
+                } 
+            } catch (err) { 
+                alert("Jaringan error."); 
+                btnElement.innerText = "Reset"; 
+                btnElement.disabled = false; 
+            } 
+        }
+        
+        async function tambahFotoGaleri() { 
+            let judul = document.getElementById('admin-foto-judul').value.trim(); 
+            let url = document.getElementById('admin-foto-url').value.trim(); 
+            if (judul === "" || url === "") { alert("Judul dan URL Foto wajib diisi!"); return; } 
+            alert("Mengunggah foto ke database..."); 
+            try { 
+                let response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "tambah_foto", judul: judul, url: url }) }); 
+                let result = await response.json(); 
+                if (result.status === "success") { 
+                    alert("Berhasil! Foto baru telah ditambahkan ke galeri."); 
+                    document.getElementById('admin-foto-judul').value = ""; 
+                    document.getElementById('admin-foto-url').value = ""; 
+                } else { alert("Gagal mengunggah: " + result.message); } 
+            } catch (err) { alert("Terjadi kesalahan jaringan saat upload foto."); console.error(err); } 
+        }
+        
+        async function bukaGaleri() { 
+            document.getElementById('main-menu-page').classList.add('hidden'); 
+            document.getElementById('anggota-page').classList.add('hidden'); 
+            document.getElementById('galeri-page').classList.remove('hidden'); 
+            let container = document.getElementById('galeri-container'); 
+            container.innerHTML = "<div style='text-align:center; font-size:0.8rem; color:#E5C594; padding:20px;'>Memuat foto galeri...</div>"; 
+            try { 
+                let res = await fetch(API_URL + "?action=get_galeri"); 
+                let json = await res.json(); 
+                if (json.status === "success") { 
+                    let list = json.data; 
+                    container.innerHTML = ""; 
+                    if (list.length === 0) { 
+                        container.innerHTML = "<div style='text-align:center; font-size:0.8rem; color:rgba(245,239,230,0.6); padding:20px;'>Belum ada foto di galeri.</div>"; 
+                        return; 
+                    } 
+                    list.forEach(foto => { 
+                        let html = `<div class="galeri-item"><div class="galeri-img-container"><img src="${foto.url}" class="galeri-img" alt="${foto.judul}" onerror="this.src='https://via.placeholder.com/400x250?text=Gambar+Gagal+Dimuat'"></div><div class="galeri-title">${foto.judul}</div></div>`; 
+                        container.innerHTML += html; 
+                    }); 
+                } else { container.innerHTML = "<div style='text-align:center; color:red; font-size:0.8rem; padding:20px;'>Gagal memuat galeri.</div>"; } 
+            } catch (e) { container.innerHTML = "<div style='text-align:center; color:red; font-size:0.8rem; padding:20px;'>Error koneksi server galeri.</div>"; } 
+        }
+        
+        async function bukaAnggota() { 
+            document.getElementById('main-menu-page').classList.add('hidden'); 
+            document.getElementById('galeri-page').classList.add('hidden'); 
+            document.getElementById('anggota-page').classList.remove('hidden'); 
+            let containerPembina = document.getElementById('grid-pembina'); 
+            let containerSekarangMPK = document.getElementById('grid-anggota-sekarang-mpk'); 
+            let containerSekarangOSIS = document.getElementById('grid-anggota-sekarang-osis'); 
+            let containerBaruMPK = document.getElementById('grid-anggota-baru-mpk'); 
+            let containerBaruOSIS = document.getElementById('grid-anggota-baru-osis'); 
+            containerPembina.innerHTML = "<div style='grid-column: span 3; text-align:center; font-size:0.75rem; color:#E5C594; padding:10px;'>Memuat data...</div>"; 
+            containerSekarangMPK.innerHTML = "<div style='grid-column: span 3; text-align:center; font-size:0.75rem; color:#E5C594; padding:10px;'>Memuat data...</div>"; 
+            containerSekarangOSIS.innerHTML = "<div style='grid-column: span 3; text-align:center; font-size:0.75rem; color:#E5C594; padding:10px;'>Memuat data...</div>"; 
+            containerBaruMPK.innerHTML = "<div style='grid-column: span 3; text-align:center; font-size:0.75rem; color:#E5C594; padding:10px;'>Memuat data...</div>"; 
+            containerBaruOSIS.innerHTML = "<div style='grid-column: span 3; text-align:center; font-size:0.75rem; color:#E5C594; padding:10px;'>Memuat data...</div>"; 
+            try { 
+                let res = await fetch(API_URL + "?action=get_anggota"); 
+                let json = await res.json(); 
+                if (json.status === "success") { 
+                    let list = json.data; 
+                    containerPembina.innerHTML = ""; 
+                    containerSekarangMPK.innerHTML = ""; 
+                    containerSekarangOSIS.innerHTML = ""; 
+                    containerBaruMPK.innerHTML = ""; 
+                    containerBaruOSIS.innerHTML = ""; 
+                    let filterPembina = list.filter(a => String(a.kategori).toLowerCase().includes("pembina")); 
+                    let filterSekarang = list.filter(a => String(a.kategori).toLowerCase().includes("sekarang")); 
+                    let filterSekarangMPK = filterSekarang.filter(a => String(a.jabatan).toLowerCase().includes("mpk") || String(a.kategori).toLowerCase().includes("mpk")); 
+                    let filterSekarangOSIS = filterSekarang.filter(a => !String(a.jabatan).toLowerCase().includes("mpk") && !String(a.kategori).toLowerCase().includes("mpk")); 
+                    let filterBaru = list.filter(a => String(a.kategori).toLowerCase().includes("baru")); 
+                    let filterBaruMPK = filterBaru.filter(a => String(a.jabatan).toLowerCase().includes("mpk") || String(a.kategori).toLowerCase().includes("mpk")); 
+                    let filterBaruOSIS = filterBaru.filter(a => !String(a.jabatan).toLowerCase().includes("mpk") && !String(a.kategori).toLowerCase().includes("mpk")); 
+                    
+                    if (filterPembina.length === 0) { containerPembina.innerHTML = "<div style='grid-column: span 3; text-align:center; font-size:0.7rem; color:rgba(245,239,230,0.6); padding:10px;'>Belum ada data pembina.</div>"; } else { filterPembina.forEach(item => { containerPembina.innerHTML += renderYearbookCard(item); }); } 
+                    if (filterSekarangMPK.length === 0) { containerSekarangMPK.innerHTML = "<div style='grid-column: span 3; text-align:center; font-size:0.7rem; color:rgba(245,239,230,0.6); padding:10px;'>Belum ada data pengurus MPK.</div>"; } else { filterSekarangMPK.forEach(item => { containerSekarangMPK.innerHTML += renderYearbookCard(item); }); } 
+                    if (filterSekarangOSIS.length === 0) { containerSekarangOSIS.innerHTML = "<div style='grid-column: span 3; text-align:center; font-size:0.7rem; color:rgba(245,239,230,0.6); padding:10px;'>Belum ada data pengurus OSIS.</div>"; } else { filterSekarangOSIS.forEach(item => { containerSekarangOSIS.innerHTML += renderYearbookCard(item); }); } 
+                    if (filterBaruMPK.length === 0) { containerBaruMPK.innerHTML = "<div style='grid-column: span 3; text-align:center; font-size:0.7rem; color:rgba(245,239,230,0.6); padding:10px;'>Belum ada data calon MPK.</div>"; } else { filterBaruMPK.forEach(item => { containerBaruMPK.innerHTML += renderYearbookCard(item); }); } 
+                    if (filterBaruOSIS.length === 0) { containerBaruOSIS.innerHTML = "<div style='grid-column: span 3; text-align:center; font-size:0.7rem; color:rgba(245,239,230,0.6); padding:10px;'>Belum ada data calon OSIS.</div>"; } else { filterBaruOSIS.forEach(item => { containerBaruOSIS.innerHTML += renderYearbookCard(item); }); } 
+                } else { 
+                    containerPembina.innerHTML = "<div style='grid-column: span 3; text-align:center; color:red; font-size:0.7rem;'>Gagal memuat data.</div>"; 
+                } 
+            } catch (e) { 
+                containerPembina.innerHTML = "<div style='grid-column: span 3; text-align:center; color:red; font-size:0.7rem;'>Error koneksi server.</div>"; 
+            } 
+        }
+        
+        function renderYearbookCard(item) { 
+            let kelasHtml = item.kelas ? `<div class="yearbook-kelas">(${item.kelas})</div>` : ''; 
+            return `<div class="yearbook-item"><div class="yearbook-img-box"><img src="${item.url}" class="yearbook-img" alt="${item.nama}" onerror="this.src='https://via.placeholder.com/150?text=No+Foto'"></div><div class="yearbook-info"><div><div class="yearbook-name">${item.nama}</div><div class="yearbook-jabatan">${item.jabatan}</div>${kelasHtml}</div><div class="yearbook-quote">"${item.kataKata}"</div></div></div>`; 
+        }
+        
+        function bukaHomeDashboard() { 
+            document.getElementById('galeri-page').classList.add('hidden'); 
+            document.getElementById('anggota-page').classList.add('hidden'); 
+            document.getElementById('main-menu-page').classList.remove('hidden'); 
+        }
+
         function mulaiPerjalanan() {
             document.getElementById('landing-page').classList.add('hidden');
             document.getElementById('video-page').classList.remove('hidden');
             
             let vid = document.getElementById('intro-video');
-            vid.play().catch(e => console.log("Video blm ada/ga muter. Ga masalah buat ngetes."));
+            vid.play().catch(e => {
+                console.log("Video blm ada atau browser ngeblok autoplay.");
+                setTimeout(tampilkanPesan, 1000); 
+            });
 
-            // JURUS TESTING: Skip video otomatis dalam 2 detik (2000 ms)
-            setTimeout(function() {
-                vid.pause(); // Stop videonya
-                tampilkanPesan(); // Langsung panggil fungsi teks ngetik
-            }, 2000);
+            vid.onended = function() {
+                tampilkanPesan();
+            };
         }
 
-        // --- FUNGSI MUNCULIN PESAN (DIPISAH BIAR GAMPANG DIPANGGIL) ---
+        // =====================================================================
+        // KATA-KATA CUTSCENE SESUAI KATEGORI (PRESISI 100%)
+        // =====================================================================
         function tampilkanPesan() {
-            document.getElementById('video-page').classList.add('hidden');
+            document.getElementById('video-page').classList.add('hidden'); 
             document.getElementById('message-page').classList.remove('hidden');
+            bgMusic.src = playlist[Math.floor(Math.random() * playlist.length)]; bgMusic.loop = true; bgMusic.volume = 0.8; bgMusic.muted = isMuted;
+            bgMusic.play().catch(e => console.log("Browser ngeblok autoplay"));
             
-            // Siapin teks beda-beda tergantung kategori
-            let teksPesan = "";
-            
-            if (kategoriUser === "purna") {
-                teksPesan = "Sebuah perjalanan yang panjang dan melelahkan telah kamu lewati, " + namaUser + ". Terima kasih atas segala dedikasi dan keringatmu. Kini saatnya beristirahat, warisanmu akan selalu abadi di sini.";
-            } else if (kategoriUser === "lanjut") {
-                teksPesan = "Tahun lalu adalah bukti ketangguhanmu. Namun, cerita " + namaUser + " belum usai di sini. Angkat kembali kepalamu, mari kita ciptakan sejarah yang lebih besar lagi.";
-            } else if (kategoriUser === "baru") {
-                teksPesan = "Selamat datang di medan juang yang baru, " + namaUser + ". Ini adalah awal dari lembaran ceritamu. Persiapkan dirimu, karena perjalanan hebat baru saja dimulai.";
-            } else {
-                teksPesan = "Terima kasih telah menjadi bagian dari perjalanan hebat ini, " + namaUser + ".";
+            let isMPK = jabatanUser.includes("mpk") || kategoriUser.includes("mpk");
+            let teksParagrafArray = []; 
+
+            // 1. PEMBINA
+            if (kategoriUser.includes("pembina")) {
+                if (isMPK) {
+                    teksParagrafArray = [
+                        "Kepada Bapak Zaki Fakaruddin. S.Sos. yang kami hormati, terima kasih atas segala bimbingan, arahan, dan kepercayaan yang telah Bapak berikan kepada kami selama perjalanan di MPK. Kehadiran Bapak bukan sekadar sebagai pembina, tetapi juga sebagai sosok yang mengajarkan kami arti tanggung jawab, kedisiplinan, serta pentingnya belajar dari setiap proses yang kami lalui.",
+                        "Kami menyadari bahwa dalam menjalankan amanah ini, masih banyak kekurangan yang mungkin belum mampu kami perbaiki sepenuhnya. Untuk itu, kami memohon maaf atas segala kesalahan, sikap, maupun perkataan yang kurang berkenan selama berada dalam bimbingan Bapak. Segala nasihat dan pengalaman yang Bapak berikan akan menjadi pelajaran berharga yang kami bawa, bahkan setelah masa kepengurusan ini berakhir.",
+                        "Kini, tibalah saatnya kami mengakhiri perjalanan ini dengan rasa hormat dan penuh rasa syukur. Mungkin kebersamaan kita dalam organisasi akan berakhir, tetapi nilai-nilai yang telah Bapak tanamkan akan tetap menjadi bagian dari perjalanan kami ke depannya. Terima kasih atas segala dedikasi dan ketulusan Bapak dalam membimbing kami. Semoga Bapak senantiasa diberikan kesehatan, kebahagiaan, dan kemudahan dalam setiap langkah. Mohon maaf atas segala kekurangan kami, dan semoga segala kebaikan yang telah Bapak berikan menjadi kenangan baik yang akan selalu kami ingat. SALAM KAMI KELAS 12 MPK!!!"
+                    ];
+                } else {
+                    teksParagrafArray = [
+                        "Kepada Bapak Eri Fathony Handoyo. S.Pd. yang kami hormati, terima kasih telah menjadi bagian berarti dalam perjalanan kami di OSIS. Terima kasih atas setiap bimbingan, kesabaran, dan kepercayaan yang Bapak berikan kepada kami. Di balik setiap arahan dan nasihat Bapak, ada pelajaran berharga yang mengajarkan kami untuk tidak hanya menjadi pengurus yang bertanggung jawab, tetapi juga pribadi yang mampu menghargai proses, menerima kekurangan, dan terus berusaha menjadi lebih baik.",
+                        "Kami menyadari bahwa selama perjalanan ini, belum semua hal dapat kami lakukan dengan sempurna. Mungkin ada sikap yang mengecewakan, perkataan yang kurang berkenan, atau harapan Bapak yang belum mampu kami penuhi sepenuhnya. Untuk itu, kami memohon maaf dengan tulus. Terima kasih karena Bapak tetap memberikan ruang bagi kami untuk belajar, memperbaiki diri, dan tumbuh melalui setiap pengalaman yang kami lalui.",
+                        "Kini, tibalah saatnya kami mengakhiri masa kepengurusan ini. Ada rasa haru ketika menyadari bahwa kebersamaan yang selama ini menjadi bagian dari hari-hari kami akan segera menjadi kenangan. Namun, kami percaya bahwa segala ilmu, nasihat, dan nilai yang telah Bapak tanamkan tidak akan berakhir bersama berakhirnya masa jabatan kami. Semua itu akan tetap kami bawa sebagai bekal untuk melangkah menuju masa depan. Terima kasih, Bapak, karena telah menjadi bagian dari proses kami bertumbuh. Mungkin kami tidak selalu mampu mengungkapkan betapa berartinya bimbingan Bapak bagi perjalanan kami, tetapi setiap pelajaran yang telah diberikan akan selalu kami kenang. Mohon maaf atas segala kekurangan kami. Semoga Bapak senantiasa diberikan kesehatan, kebahagiaan, dan kemudahan dalam setiap langkah. Meski kelak perjalanan kami tak lagi berada dalam satu organisasi, kami akan selalu mengingat bahwa pernah ada sosok pembina yang turut menjadi bagian dari cerita dan proses pendewasaan kami. SALAM KAMI KELAS 12 OSIS!!!"
+                    ];
+                }
+            } 
+            // 2. KELAS 12 (Atau Purna Tugas)
+            else if (kategoriUser.includes("purna") || kelasUser.includes("12")) {
+                if (isMPK) {
+                    teksParagrafArray = [
+                        "Untuk kita, MPK kelas 12. Pada akhirnya, kita sampai juga di titik ketika amanah yang pernah kita emban bersama harus kita lepaskan. Rasanya begitu banyak cerita yang telah kita ukir selama menjadi bagian dari MPK. Kita pernah duduk bersama untuk menyampaikan pendapat, belajar memahami sudut pandang yang berbeda, dan berusaha menjalankan tanggung jawab sebaik mungkin. Dari semua proses itu, kita belajar bahwa menjadi bagian dari MPK bukan hanya tentang menyuarakan aspirasi atau menjalankan tugas, tetapi juga tentang keberanian untuk bersikap, kebijaksanaan dalam mengambil keputusan, dan kesediaan untuk mendengarkan.",
+                        "Mungkin selama perjalanan ini, tidak semua hal berjalan sesuai keinginan kita. Ada pendapat yang tidak selalu diterima, ada keputusan yang membutuhkan banyak pertimbangan, dan ada tanggung jawab yang terkadang terasa berat. Namun, justru dari situlah kita mendapatkan pelajaran yang tidak selalu bisa kita temukan di dalam kelas. Kita belajar menjadi lebih dewasa, lebih bertanggung jawab, dan lebih memahami bahwa setiap peran memiliki arti, sekecil apa pun peran itu.",
+                        "Sampai jumpa, teman-teman. Terima kasih karena pernah berjalan bersama dalam satu tanggung jawab dan satu tujuan. Jika kelak kita bertemu kembali setelah sekian lama, semoga kita masih bisa mengingat hari-hari ketika kita pernah menjadi bagian dari MPK. Hari ketika kita belajar bahwa sebuah amanah pada akhirnya akan selesai, tetapi nilai-nilai yang kita dapatkan darinya akan terus kita bawa. Selamat melanjutkan perjalanan, teman-teman. Semoga perpisahan ini bukan menjadi alasan untuk melupakan, melainkan menjadi pengingat bahwa kita pernah tumbuh bersama di tempat yang sama. SEE YOU GENERASI PERTAMA MPK!!!"
+                    ];
+                } else {
+                    teksParagrafArray = [
+                        "Untuk kita, keluarga OSIS kelas 12. Rasanya tidak menyangka bahwa perjalanan yang kita mulai bersama akhirnya sampai juga di penghujung cerita. Begitu banyak hal yang telah kita lewati, mulai dari tawa, lelah, perbedaan pendapat, hingga perjuangan yang mungkin tidak selalu mudah. Kita pernah sama-sama sibuk, saling membantu, saling menguatkan, dan belajar memahami satu sama lain. Semua itu kini menjadi kenangan yang akan selalu punya tempat tersendiri di hati kita.",
+                        "Terima kasih untuk setiap usaha yang telah kita berikan, untuk setiap waktu yang kita korbankan, dan untuk setiap langkah yang kita tempuh bersama. Kita mungkin tidak selalu sempurna dalam menjalankan tanggung jawab, tetapi kita telah berusaha memberikan yang terbaik dengan cara kita masing-masing. Jika selama perjalanan ini ada kata yang menyakiti, sikap yang mengecewakan, atau kesalahan yang tidak disengaja, semoga kita bisa saling memaafkan sebelum benar-benar melangkah pergi.",
+                        "Sampai jumpa, teman-teman seperjuanganku. Terima kasih telah menjadi bagian dari masa sekolah yang begitu berarti. Semoga jalan yang kita pilih setelah ini membawa kita menuju impian masing-masing. Kita boleh berpisah dalam tugas dan tanggung jawab, tetapi semoga kenangan tentang kita tetap tinggal. Sebab, suatu hari nanti, ketika kita mengenang masa-masa ini, kita bisa tersenyum dan berkata, “Kita pernah berjuang bersama, dan itu akan selalu menjadi bagian indah dalam hidup kita.” SEE YOU SIBER 26!!!!"
+                    ];
+                }
+            } 
+            // 3. KELAS 11 & 10 (Pengurus Sekarang / Baru)
+            else {
+                if (isMPK) {
+                    teksParagrafArray = [
+                        "Untuk kalian, MPK kelas 10 dan 11, perjalanan kalian masih panjang dan masih banyak cerita yang menunggu untuk dituliskan. Ketika kami nantinya melangkah menuju perjalanan yang baru, akan ada tanggung jawab dan harapan yang kami titipkan kepada kalian untuk dilanjutkan. Akan ada banyak hal yang perlu dipelajari, tantangan yang harus dihadapi, serta keputusan yang membutuhkan keberanian dan kedewasaan. Namun, jangan pernah takut untuk mencoba, karena setiap proses yang kalian lalui adalah bagian dari perjalanan untuk menjadi lebih baik.",
+                        "Jadikanlah MPK bukan sekadar tempat untuk menjalankan tugas, tetapi juga tempat untuk belajar menghargai pendapat, membangun kepercayaan, dan memahami arti sebuah tanggung jawab. Tidak apa-apa jika suatu saat kalian melakukan kesalahan atau menghadapi kesulitan, selama kalian mau belajar dan terus memperbaiki diri. Jagalah kebersamaan yang telah dibangun, saling kuatkan ketika keadaan terasa sulit, dan jangan biarkan perbedaan menjadi alasan untuk berhenti berjalan bersama. Kami berharap, ke depannya MPK dapat terus berkembang melalui usaha dan semangat yang kalian miliki. Jangan hanya melanjutkan apa yang telah ada, tetapi beranilah menciptakan hal-hal baru yang membawa perubahan baik.",
+                        "Bawalah nama MPK dengan penuh tanggung jawab, jaga kepercayaan yang telah diberikan, dan jadikan setiap kesempatan sebagai ruang untuk tumbuh menjadi lebih baik. Kini, giliran kalian untuk melanjutkan cerita ini. Teruslah melangkah, ciptakan kenangan kalian sendiri, dan buktikan bahwa MPK akan selalu memiliki generasi yang siap menjaga serta membawa amanah ini menuju masa depan yang lebih baik."
+                    ];
+                } else {
+                    teksParagrafArray = [
+                        "Untuk teman-teman kelas 11 dan 10, perjalanan kalian masih berlanjut. Tetaplah semangat untuk meneruskan perjuangan ini, menjaga kebersamaan, dan memperbaiki hal-hal yang masih kurang. Jangan takut mencoba sesuatu yang baru, jangan malu untuk belajar, dan jangan mudah menyerah ketika menghadapi kesulitan. Jadikan pengalaman yang sudah kita lewati sebagai pelajaran agar ke depannya kalian bisa menjadi lebih baik. Ingat, OSIS bukan tentang siapa yang paling hebat atau paling terlihat, melainkan tentang bagaimana kita bisa memberikan manfaat dan meninggalkan sesuatu yang berarti.",
+                        "Kami juga ingin meminta maaf apabila selama kebersamaan ini ada perkataan, sikap, atau tindakan yang kurang berkenan. Kita memang nggak selalu sempurna, tetapi semoga setiap perbedaan dan kesalahan yang pernah terjadi bisa menjadi pelajaran untuk kita semua. Jangan sampai berakhirnya satu kepengurusan membuat kita melupakan semua kebaikan dan kebersamaan yang sudah dibangun.",
+                        "Terima kasih, keluarga OSIS. Terima kasih untuk semua cerita, perjuangan, dan kenangan yang sudah kita ciptakan bersama. Kita mungkin nggak selamanya berada dalam satu kepengurusan, tetapi semoga kenangan ini selalu punya tempat di hati kita. Sampai jumpa di perjalanan berikutnya, bukan sebagai orang asing, melainkan sebagai bagian dari cerita yang pernah kita bangun bersama."
+                    ];
+                }
             }
 
-            // Panggil fungsi ngetik
-            ketikTeks(teksPesan, 0);
+            document.getElementById('typewriter-text').innerHTML = ""; 
+            ketikParagrafBeruntun(teksParagrafArray, 0, 0);
         }
 
-        // (Kalau nanti mau videonya full lagi, ganti "setTimeout" pake kodingan "ended" yang sebelumnya)
-
-        // --- FUNGSI EFEK NGETIK (TYPEWRITER) ---
-        function ketikTeks(teks, index) {
+        // FUNGSI ANIMASI NGETIK DENGAN AUTO SCROLL SMOOTH KE BAWAH
+        function ketikParagrafBeruntun(arrayParagraf, indexParagraf, indexHuruf) {
             let elemenTeks = document.getElementById('typewriter-text');
+            let messageBox = document.getElementById('messageBoxScroll');
             
-            // Kosongin teks pas mulai ngetik (buat jaga-jaga kalau dites ulang)
-            if (index === 0) elemenTeks.innerHTML = ""; 
-            
-            if (index < teks.length) {
-                elemenTeks.innerHTML += teks.charAt(index);
-                index++;
+            if (indexParagraf < arrayParagraf.length) {
+                let teksSekarang = arrayParagraf[indexParagraf];
                 
-                // Kecepatan ngetik (60 milidetik per huruf)
-                setTimeout(function() { ketikTeks(teks, index); }, 60); 
-            } else {
-                // Kalau ngetik udah selesai, munculin tombol lanjut
-                setTimeout(function() {
-                    document.getElementById('btn-lanjut').classList.remove('hidden');
-                }, 500);
+                if (indexHuruf < teksSekarang.length) {
+                    elemenTeks.innerHTML += teksSekarang.charAt(indexHuruf);
+                    messageBox.scrollTop = messageBox.scrollHeight;
+                    setTimeout(function() { ketikParagrafBeruntun(arrayParagraf, indexParagraf, indexHuruf + 1); }, 30); 
+                } else {
+                    if (indexParagraf < arrayParagraf.length - 1) {
+                        elemenTeks.innerHTML += "<br><br>"; 
+                        messageBox.scrollTop = messageBox.scrollHeight;
+                        setTimeout(function() { ketikParagrafBeruntun(arrayParagraf, indexParagraf + 1, 0); }, 1000);
+                    } else {
+                        setTimeout(function() { document.getElementById('btn-lanjut').classList.remove('hidden'); }, 600);
+                    }
+                }
             }
         }
 
-        function masukHallOfFame() {
-            alert("Lanjut ke menu utama / statistik!");
+        async function masukHallOfFame() {
+            document.getElementById('message-page').classList.add('hidden'); 
+            document.getElementById('hall-of-fame-page').classList.remove('hidden');
+            
+            if (!isPreviewMode) {
+                try {
+                    await fetch(API_URL + "?kode=" + encodeURIComponent(currentKode) + "&action=set_sudah");
+                    statusNontonUser = "SUDAH";
+                } catch (e) {
+                    console.error("Gagal memperbarui status nonton:", e);
+                }
+            }
+            
+            slideAktif = 1; 
+            resetSlides(); 
+            updateTampilanBahasa();
+        }
+
+        function resetSlides() { for(let i=1; i<=totalSlide; i++) { document.getElementById('slide-'+i).classList.remove('active'); } document.getElementById('slide-1').classList.add('active'); }
+        function lanjutkanSlide() { if(slideAktif === 5) { document.getElementById('hall-of-fame-page').classList.add('hidden'); bukaMainMenu(); return; } document.getElementById('slide-'+slideAktif).classList.remove('active'); slideAktif++; document.getElementById('slide-'+slideAktif).classList.add('active'); updateTampilanBahasa(); }
+        function bukaMainMenu() { document.getElementById('main-menu-page').classList.remove('hidden'); updateTampilanBahasa(); }
+        function rewatchWrap() { document.getElementById('main-menu-page').classList.add('hidden'); document.getElementById('hall-of-fame-page').classList.remove('hidden'); slideAktif = 1; resetSlides(); updateTampilanBahasa(); if(bgMusic.paused) bgMusic.play().catch(e=>console.log("Error")); }
+        function toggleAudio() { isMuted = !isMuted; bgMusic.muted = isMuted; updateAudioButtonText(); }
+        function updateAudioButtonText() { let btn = document.getElementById('btn-audio'); btn.innerText = isMuted ? (currentLang==="ID"?"🔇 Musik: Off":"🔇 Music: Off") : (currentLang==="ID"?"🔊 Musik: On":"🔊 Music: On"); }
+        
+        function logout() { 
+            isPreviewMode = false;
+            document.getElementById('input-kode').value = ""; 
+            document.getElementById('main-menu-page').classList.add('hidden'); 
+            document.getElementById('galeri-page').classList.add('hidden'); 
+            document.getElementById('anggota-page').classList.add('hidden');
+            document.getElementById('admin-panel-page').classList.add('hidden'); 
+            document.getElementById('login-page').classList.remove('hidden'); 
+            bgMusic.pause(); bgMusic.currentTime = 0; 
+        }
+
+        function toggleBahasa() { currentLang = (currentLang === "ID") ? "EN" : "ID"; document.getElementById('btn-lang').innerText = "🌐 " + currentLang; updateAudioButtonText(); updateTampilanBahasa(); }
+        
+        function updateTampilanBahasa() {
+            document.getElementById('hof-julukan').innerText = julukanUser; document.getElementById('sum-nama').innerText = namaPanjangUser; document.getElementById('dash-nama').innerText = namaPanjangUser; document.getElementById('sum-julukan').innerText = julukanUser; document.getElementById('dash-julukan').innerText = julukanUser;
+
+            let roleClean = roleUser.toLowerCase();
+            let elRole = document.getElementById('hof-role'), elDesc = document.getElementById('hof-role-desc'), sumRole = document.getElementById('sum-role'), dashRole = document.getElementById('dash-role'), sumDesc = document.getElementById('sum-role-desc'), dashDesc = document.getElementById('dash-role-desc');
+
+            let vTidur = "", vKopi = "", vEvent = "", vPartner = "";
+            if (kategoriUser.includes("baru")) {
+                vTidur = (currentLang === "ID") ? "0 Jam (Aman)" : "0 Hours"; vKopi = (currentLang === "ID") ? "Susu 🧃" : "Milk 🧃"; vEvent = (currentLang === "ID") ? "Beban (Soon)" : "Unassigned"; vPartner = (currentLang === "ID") ? "Malu-Malu 👉👈" : "Still Shy 👉👈";
+            } else {
+                vTidur = (currentLang === "ID") ? "99+ Jam 💀" : "99+ Hours 💀"; vKopi = (currentLang === "ID") ? "1.000+ Gelas" : "1,000+ Cups"; vEvent = jumlahEventUser + (currentLang === "ID" ? " Event" : " Events"); vPartner = partnerUser;
+            }
+
+            document.getElementById('hof-tidur').innerText = vTidur; document.getElementById('hof-kopi').innerText = vKopi; document.getElementById('hof-event').innerText = vEvent; document.getElementById('hof-partner').innerText = vPartner;
+            document.getElementById('sum-tidur').innerText = vTidur; document.getElementById('sum-kopi').innerText = vKopi; document.getElementById('sum-event').innerText = vEvent; document.getElementById('sum-partner').innerText = vPartner;
+            document.getElementById('dash-tidur').innerText = vTidur; document.getElementById('dash-kopi').innerText = vKopi; document.getElementById('dash-event').innerText = vEvent; document.getElementById('dash-partner').innerText = vPartner;
+
+            let tRoleID = "", tRoleEN = "", dListID = [], dListEN = [];
+            if (roleClean.includes("mind thinker")) { tRoleID += "Sang Pemikir Konsep 🧠 / "; tRoleEN += "The Mind Thinker 🧠 / "; dListID.push("Otak di balik ide-ide brilian."); dListEN.push("The mastermind behind brilliant ideas."); }
+            if (roleClean.includes("problem solver")) { tRoleID += "Penumpas Masalah ⚡ / "; tRoleEN += "The Problem Solver ⚡ / "; dListID.push("Selalu sigap dan tenang di lapangan."); dListEN.push("Always alert and calm on the field."); }
+            if (roleClean.includes("field commander")) { tRoleID += "Pawang Lapangan 🚨 / "; tRoleEN += "The Field Commander 🚨 / "; dListID.push("Komandan garis depan paling sibuk."); dListEN.push("The front-line commander."); }
+            if (roleClean.includes("mood booster")) { tRoleID += "Pencair Suasana ✨ / "; tRoleEN += "The Mood Booster ✨ / "; dListID.push("Penyelamat rapat dari ketegangan."); dListEN.push("Turning tense meetings into laughter."); }
+            if (roleClean.includes("pure heartedly")) { tRoleID += "Pemberi Hati Tulus 🤍 / "; tRoleEN += "The Pure Heartedly 🤍 / "; dListID.push("Tulus maju jadi volunteer darurat."); dListEN.push("Stepping up during emergencies."); }
+            if (roleClean.includes("wise advisor")) { tRoleID += "Pilar Kebijaksanaan 🦉 / "; tRoleEN += "The Wise Advisor 🦉 / "; dListID.push("Tempat curhat paling nyaman."); dListEN.push("The go-to person when stressed."); }
+            if (roleClean.includes("silent worker")) { tRoleID += "Pekerja Senyap 🤫 / "; tRoleEN += "The Silent Worker 🤫 / "; dListID.push("Kerja nyata tanpa banyak bicara."); dListEN.push("Moves without making a sound, real results."); }
+            if (roleClean.includes("strategic mastermind")) { tRoleID += "Dalang Strategis ♟️ / "; tRoleEN += "The Strategic Mastermind ♟️ / "; dListID.push("Menyusun strategi jangka panjang."); dListEN.push("Crafting long-term strategies."); }
+
+            if (tRoleID === "") { tRoleID = roleUser; tRoleEN = roleUser; dListID.push("Kontribusi epik buat organisasi."); dListEN.push("Epic contribution to the organization."); } 
+            else { tRoleID = tRoleID.slice(0,-3); tRoleEN = tRoleEN.slice(0,-3); }
+
+            elRole.innerText = (currentLang==="ID")?tRoleID:tRoleEN; sumRole.innerText = (currentLang === "ID") ? tRoleID : tRoleEN; dashRole.innerText = (currentLang === "ID") ? tRoleID : tRoleEN; elRole.style.color = "#ffb3ff";
+            elDesc.innerText = (currentLang === "ID") ? dListID.join(" ") : dListEN.join(" "); sumDesc.innerText = (currentLang === "ID") ? dListID.join(" ") : dListEN.join(" "); dashDesc.innerText = (currentLang === "ID") ? dListID.join(" ") : dListEN.join(" ");
+
+            let org = kategoriUser.includes("mpk") ? "MPK" : "OSIS";
+            let statusJalan = kategoriUser.includes("purna") ? ((currentLang === "ID") ? "Legenda " + org : org + " Legend") : kategoriUser.includes("lanjut") ? ((currentLang === "ID") ? "Garda Depan " + org : "Frontline " + org) : "New Challenger " + org;
+            document.getElementById('hof-status').innerText = statusJalan; document.getElementById('sum-status').innerText = statusJalan; document.getElementById('dash-status').innerText = statusJalan;
         }
     </script>
-
 </body>
 </html>
