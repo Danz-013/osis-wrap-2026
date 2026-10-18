@@ -329,7 +329,7 @@
         let allUsersData = []; 
         let isPreviewMode = false;
 
-        const playlist = ["lagu1.mp3", "lagu2.mp3", "lagu3.mp3", "lagu4.mp3", "lagu5.mp3", "lagu6.mp3", "lagu7.mp3"]; 
+        const playlist = ["lagu1.mp3", "lagu2.mp3", "lagu3.mp3"]; 
         let bgMusic = new Audio(); let isMuted = false;
         let slideAktif = 1; const totalSlide = 5; let currentLang = "ID"; 
 
@@ -728,6 +728,9 @@
         function toggleBahasa() { currentLang = (currentLang === "ID") ? "EN" : "ID"; document.getElementById('btn-lang').innerText = "🌐 " + currentLang; updateAudioButtonText(); updateTampilanBahasa(); }
         
         function updateTampilanBahasa() {
+            let sapaanTeks = (currentLang === "ID") ? `Halo ${namaUser}, INI RAPORMU:` : `Hello ${namaUser}, HERE IS YOUR REPORT:`;
+            document.getElementById('lbl-sapaan').innerText = sapaanTeks;
+
             document.getElementById('hof-julukan').innerText = julukanUser; document.getElementById('sum-nama').innerText = namaPanjangUser; document.getElementById('dash-nama').innerText = namaPanjangUser; document.getElementById('sum-julukan').innerText = julukanUser; document.getElementById('dash-julukan').innerText = julukanUser;
 
             let roleClean = roleUser.toLowerCase();
